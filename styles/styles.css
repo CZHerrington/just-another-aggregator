@@ -1,23 +1,110 @@
 html {
     /* background: conic-gradient(#0B1C43, #163169, #0B1C43, #501B77, #0B1C43); */
-    background: linear-gradient(45deg, #0B1C43, #163169, #0B1C43, #501B77, #0B1C43);
+    background-color: black;
     height: 100%;
-    /* animation-name: pulseBackgroundGradient; */
-    animation: pulseBackgroundGradient 2s ease-in-out infinite alternate;
-    /* transition-timing-function: ease; */
-    /* animation-iteration-count: infinite;
-    animation-direction: alternate; */
+    box-sizing: border-box;
 }
 
-        /* background: linear-gradient(45deg, #0B1C43, #163169, #0B1C43, #501B77, #0B1C43); */
-        /* background: linear-gradient(45deg, #0B1C43, #501B77, #0B1C43, #163169, #0B1C43); */
+*, *:before, *:after {
+    box-sizing: inherit;
+}
 
+/* Background-div */
 .full-page-background {
     position: fixed;
+    z-index: -999;
     top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-size: 250% 100%;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(45deg, #0B1C43, #163169, #321574, #501B77, #0B1C43);
+    background-size: 350% 100%;
+    animation: background-gradient 40s ease infinite alternate;
+}
 
+/* Background gradient animation */
+@keyframes background-gradient {
+
+    0% {
+        background-position: 0% 50%;
+        opacity: .7;
+    }
+    12.5% {
+        opacity: 0.5;
+    }
+    25% {
+        opacity: 0.7;
+    }
+    37.5% {
+        opacity: 0.5;
+    }
+    50% {
+        background-position: 100% 50%;
+        opacity: 0.7;
+    }
+    62.5% {
+        opacity: 0.5;
+    }
+    75% {
+        opacity: 0.7;
+    }
+    87.5% {
+        opacity: 0.5;
+    }
+    100% {
+        background-position: 0% 50%;
+        opacity: .7;
+    }
+
+}
+
+.header {
+    height: 50px;
+    background: linear-gradient(#000, #222);
+    box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.5);
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    padding-top: 50px;
+    border: none;
+}
+
+main {
+    padding-top: 50px;
+    column-count: 3;
+    width: 90%;
+    height: 90%;
+    margin: 0 auto;
+
+} 
+
+.small-card {
+    display: inline-block;
+    background: radial-gradient(#222, #181818);
+    border-radius: 10px;
+    width: 100%;
+    height: 100px; /*Temp*/
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.8);
+    opacity: 0.5;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/*Temp*/
+.small-card.one {
+    height: 130px;
+}
+/*Temp*/
+.small-card.two {
+    height: 180px;
+}
+/*Temp*/
+.small-card.three {
+    height: 140px;
 }
