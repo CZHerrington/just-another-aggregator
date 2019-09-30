@@ -1,67 +1,25 @@
 html {
-    /* background: conic-gradient(#0B1C43, #163169, #0B1C43, #501B77, #0B1C43); */
-    background-color: black;
+    /* background-color: black; */
+    background-color: black; /*temp for development. Use black.*/
     height: 100%;
     box-sizing: border-box;
+    font-size: 16px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
 *, *:before, *:after {
     box-sizing: inherit;
 }
 
-/* Background-div */
-.full-page-background {
-    position: fixed;
-    z-index: -999;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(45deg, #0B1C43, #163169, #321574, #501B77, #0B1C43);
-    background-size: 350% 100%;
-    animation: background-gradient 40s ease infinite alternate;
-}
 
-/* Background gradient animation */
-@keyframes background-gradient {
 
-    0% {
-        background-position: 0% 50%;
-        opacity: .7;
-    }
-    12.5% {
-        opacity: 0.5;
-    }
-    25% {
-        opacity: 0.7;
-    }
-    37.5% {
-        opacity: 0.5;
-    }
-    50% {
-        background-position: 100% 50%;
-        opacity: 0.7;
-    }
-    62.5% {
-        opacity: 0.5;
-    }
-    75% {
-        opacity: 0.7;
-    }
-    87.5% {
-        opacity: 0.5;
-    }
-    100% {
-        background-position: 0% 50%;
-        opacity: .7;
-    }
-
-}
+/* GLOBAL ELEMENT ADJUSTMENTS */
 
 .header {
     height: 50px;
-    background: linear-gradient(#000, #222);
+    background: linear-gradient(rgba(34, 34, 34, 0.5), rgba(15, 15, 15, 0.5));
     box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.5);
-    opacity: 0.5;
+    border-bottom: 3px solid #ddd;
     position: fixed;
     top: 0;
     left: 0;
@@ -76,35 +34,172 @@ body {
 }
 
 main {
-    padding-top: 50px;
-    column-count: 3;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    flex-wrap: wrap;
     width: 90%;
     height: 90%;
     margin: 0 auto;
 
-} 
+}
+
+h2 {
+    font-size: 1.3rem;
+    padding: 0px;
+    margin: 8px 0px;
+}
+
+h3 {
+    font-size: 1rem;
+    padding: 0px;
+    margin: 8px 0px;
+}
+
+
+
+/* BACKGROUND GRADIENT */
+
+/* Background-div */
+.full-page-background {
+    position: fixed;
+    z-index: -999;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(45deg, #0B1C43, #163169, #321574, #501B77, #0B1C43);
+    background-size: 350% 100%;
+    animation: background-gradient 30s ease infinite alternate;
+}
+
+/* Background gradient animation */
+@keyframes background-gradient {
+
+    0% {
+        background-position: 0% 50%;
+        opacity: 0.8;
+    }
+    12.5% {
+        opacity: 0.6;
+    }
+    25% {
+        opacity: 0.8;
+    }
+    37.5% {
+        opacity: 0.6;
+    }
+    50% {
+        background-position: 100% 50%;
+        opacity: 0.8;
+    }
+    62.5% {
+        opacity: 0.6;
+    }
+    75% {
+        opacity: 0.8;
+    }
+    87.5% {
+        opacity: 0.6;
+    }
+    100% {
+        background-position: 0% 50%;
+        opacity: .8;
+    }
+
+}
+
+
+
+/* CARD SETTINGS */
 
 .small-card {
-    display: inline-block;
-    background: radial-gradient(#222, #181818);
-    border-radius: 10px;
-    width: 100%;
-    height: 100px; /*Temp*/
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.8);
-    opacity: 0.5;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    display: block;
+    position: relative;
+    background: radial-gradient(rgba(64, 64, 64, 0.4), rgba(50, 50, 50, 0.4));
+    border-radius: 20px;
+    min-width: 5%;
+    max-width: 50%;
+    height: 150px; /*Temp*/
+    /* box-shadow: 2px 2px 3px 0 rgba(20, 20, 20, 0.9); */
+    box-shadow: 2px 2px 4px 0 rgba(20, 20, 20, 0.9) inset;
+    border: 3px solid #ddd;
+    margin: 1%;
+    flex-grow: 1;
+    /* overflow: hidden; */
 }
 
-/*Temp*/
-.small-card.one {
-    height: 130px;
+.small-card:hover {
+    transform: scale3d(1.03, 1.03, 1.03);
+    z-index: 2;
+    box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.15);
 }
-/*Temp*/
-.small-card.two {
-    height: 180px;
+
+.small-card.music-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
-/*Temp*/
-.small-card.three {
-    height: 140px;
+
+.music-card .album-art {
+    max-height: 80%;
+    padding-left: 20px;
 }
+
+.music-card .song-info {
+    display: inline-block;
+    color: #ddd;
+    text-shadow: 1px 1px 3px #000;
+    margin-left: 15px;
+    padding-right: 50px;
+    /* max-width: 60%; */
+}
+
+/* Up / Down Vote Buttons */
+.upvoteDownvote {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* align-items: center; */
+    /* position: fixed; */
+    position: absolute;
+    right: 10px;
+    height: 100%;
+    padding-right: 5px;
+}
+
+.voteButton {
+    max-width: 30px;
+    border-radius: 5px;
+}
+
+.voteButton:hover {
+    transform: scale3d(1.2, 1.2, 1.2);
+    z-index: 2;
+}
+
+
+
+/* MEDIA QUERIES */
+
+@media only screen and (max-width: 1024px) {
+    .small-card {
+        max-width: 48%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .small-card {
+        max-width: 100%;
+    }
+
+    .upvoteDownvote {
+        right: 30px;
+    }
+
+    .voteButton {
+        max-width: 50px;
+    }
+}
+
