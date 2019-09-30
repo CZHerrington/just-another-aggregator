@@ -1,5 +1,6 @@
 const header = $('header');
 
+/* lodash templating (_.template) example */
 //  template html
 const headlineTemplate = `
     <div data-articleid="<%= id %>" class="breaking-content">
