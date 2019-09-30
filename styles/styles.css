@@ -1,0 +1,23 @@
+html {
+    /* background: conic-gradient(#0B1C43, #163169, #0B1C43, #501B77, #0B1C43); */
+    background: linear-gradient(45deg, #0B1C43, #163169, #0B1C43, #501B77, #0B1C43);
+    height: 100%;
+    /* animation-name: pulseBackgroundGradient; */
+    animation: pulseBackgroundGradient 2s ease-in-out infinite alternate;
+    /* transition-timing-function: ease; */
+    /* animation-iteration-count: infinite;
+    animation-direction: alternate; */
+}
+
+        /* background: linear-gradient(45deg, #0B1C43, #163169, #0B1C43, #501B77, #0B1C43); */
+        /* background: linear-gradient(45deg, #0B1C43, #501B77, #0B1C43, #163169, #0B1C43); */
+
+.full-page-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: 250% 100%;
+
+}
