@@ -1,5 +1,6 @@
 const header = $('header');
-
+let api = new Api()
+// api.getPrefs('zach!');
 /* lodash templating (_.template) example */
 //  template html
 const headlineTemplate = `
