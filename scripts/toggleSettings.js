@@ -4,11 +4,11 @@ const mainContent = document.querySelector("#mainContent");
 
 
 const categoryToggleRow = document.querySelector('#categoryToggleRow');
-const musicToggle = document.querySelector('#musicToggle');
-const moviesToggle = document.querySelector('#moviesToggle');
-const tvToggle = document.querySelector('#tvToggle');
-const booksToggle = document.querySelector('#booksToggle');
-const newsToggle = document.querySelector('#newsToggle');
+const musicToggleRow = document.querySelector('#musicToggleRow');
+const movieToggleRow = document.querySelector('#movieToggleRow');
+const tvToggleRow = document.querySelector('#tvToggleRow');
+const bookToggleRow = document.querySelector('#bookToggleRow');
+const newsToggleRow = document.querySelector('#newsToggleRow');
 
 
 expandCollapse.addEventListener('click', function(e) {
@@ -19,6 +19,21 @@ expandCollapse.addEventListener('click', function(e) {
 });
 
 categoryToggleRow.addEventListener('click', function(e) {
+    e.target.classList.toggle('activated');
+});
+musicToggleRow.addEventListener('click', function(e) {
+    e.target.classList.toggle('activated');
+});
+movieToggleRow.addEventListener('click', function(e) {
+    e.target.classList.toggle('activated');
+});
+tvToggleRow.addEventListener('click', function(e) {
+    e.target.classList.toggle('activated');
+});
+bookToggleRow.addEventListener('click', function(e) {
+    e.target.classList.toggle('activated');
+});
+newsToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
 });
 
