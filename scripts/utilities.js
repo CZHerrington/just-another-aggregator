@@ -33,7 +33,7 @@ class Api {
         get(apiUrlCreator(indexId))
             .then((json) => {this.binIdMap = json})
             .then(() => console.log("got binIdMap: ", this.binIdMap))
-            .then(() => {this.requestPrefs(name)}) /* this is just for testing, remove when we have ui hooks */
+            .then(() => {this.requestPrefs(name)})
     }
 
     requestPrefs(name) {
