@@ -1,6 +1,18 @@
 "use strict";
 
-let api = new Api()
+/* Api class use example: */
+// let api = new Api('example')
+
+/* using setTimeout() to simulate delay */
+// setTimeout(
+//     ()=> {
+//         api.setDislike('movies', '50 first dates')
+//         api.setLike('music', 'basically everything')
+//         const musicPrefs = api.getPreferences('music')
+//         const defaultCategories = api.getDefaultCategories()
+//     }, 4000
+// )
+
 //jquery to select the element on the DOM
 const main = $('main')
 
@@ -53,8 +65,3 @@ function updateTrendData() {
 updateTrendData();
 }
     
-
-
-
-
-
