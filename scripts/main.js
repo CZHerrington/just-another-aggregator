@@ -49,7 +49,7 @@ function updateTrendData() {
         createMusicList(response);
         //console.log("response is ", response);
     });
-          
+
 updateTrendData();
 }
     
