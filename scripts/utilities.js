@@ -20,9 +20,10 @@ const emptyPrefs = {"name":"","hash":"","data":{"preferences":{"music":{"likes":
 const apiUrl = `https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/`;
 const indexId = '5d936e62ff3d100ac6c48eeb';
 
-const apiUrlCreator = (id) => `${apiUrl}${id}/latest?nocache=${Math.random()}`
-const apiUrlCreatorCache = (id) => `${apiUrl}${id}`
-const apiUrlIndex = `${apiUrl}${indexId}`
+const apiUrlCreator = (id) => `${apiUrl}${id}/latest?nocache=${Math.random()}`;
+const apiUrlCreatorCache = (id) => `${apiUrl}${id}`;
+const apiUrlIndex = `${apiUrl}${indexId}`;
+
 class Api {
     constructor(name) {
         this.binIdMap = {};
