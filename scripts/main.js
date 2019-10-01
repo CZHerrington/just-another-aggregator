@@ -1,4 +1,4 @@
-const header = $('header');
+const header = $('main');
 
 /* lodash templating (_.template) example */
 //  template html
