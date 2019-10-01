@@ -60,15 +60,15 @@ class Api {
                 console.log('new id ', json);
                 this.binIdMap[name] = json.id;
                 sendRequest(`https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/5d936e62ff3d100ac6c48eeb`, "PUT", this.binIdMap)
-                this.modifyPrefs()
+                this.persistPrefs()
             })
 
         //  update binIdIndex
 
     }
 
-    modifyPrefs() {
-        console.log('modify prefs', this.prefs);
+    persistPrefs() {
+        console.log('persist prefs', this.prefs);
         const id = this.binIdMap[this.name];
         if (id !== undefined) {
             sendRequest(`https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/${id}`, "PUT", this.prefs)
