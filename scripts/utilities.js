@@ -34,7 +34,7 @@ class Api {
     }
 
     getPrefs(name) {
-        if (this.binIdMap === {}) console.warn('ONLY CALL GETPREFS AFTER binIdMap IS POPULATED')
+        if (this.binIdMap === {}) console.warn('ONLY CALL .getPrefs() AFTER binIdMap IS POPULATED')
         if (!this.binIdMap[name]) {
             console.log('getPrefs can\'t find ' + name)
             this._addName(name);
