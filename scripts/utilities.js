@@ -17,7 +17,12 @@ function sendRequest(url, method, body = undefined) {
 }
 
 const emptyPrefs = {"name":"","hash":"","data":{"preferences":{"music":{"likes":[],"dislikes":[]},"movies":{"likes":[],"dislikes":[]},"news":{"likes":[],"dislikes":[]},"tv":{"likes":[],"dislikes":[]},"books":{"likes":[],"dislikes":[]}},"defaultCategories":["movies", "music", "books", "tv", "news"]}};
+const apiUrl = `https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/`;
+const indexId = '5d936e62ff3d100ac6c48eeb';
 
+const apiUrlCreator = (id) => `${apiUrl}${id}/latest?nocache=${Math.random()}`
+const apiUrlCreatorCache = (id) => `${apiUrl}${id}`
+const apiUrlIndex = `${apiUrl}${indexId}`
 class Api {
     constructor(name) {
         this.binIdMap = {};
@@ -25,7 +30,7 @@ class Api {
         this.prefs = emptyPrefs;
 
         console.log('init Api()')
-        get('https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/5d936e62ff3d100ac6c48eeb/latest')
+        get(apiUrlCreator(indexId))
             .then((json) => {this.binIdMap = json})
             .then(() => console.log("got binIdMap: ", this.binIdMap))
             .then(() => {this.requestPrefs(name)}) /* this is just for testing, remove when we have ui hooks */
@@ -42,7 +47,7 @@ class Api {
             const id = this.binIdMap[name];
             // nocache is to avoid browser 304 responses
             // fetch prefs
-            sendRequest(`https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/${id}/latest?nocache=${Math.random()}`, 'GET')
+            sendRequest(apiUrlCreator(id), 'GET')
                 .then((json) => {this.prefs = json})
                 .then((json) => console.log('got prefs', this.prefs))
         }
@@ -53,11 +58,11 @@ class Api {
         //  create new id and prefs for user
         this.prefs.name = name;
         this.name = name;
-        sendRequest(`https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/`, "POST", this.prefs)
+        sendRequest(apiUrl, "POST", this.prefs)
             .then((json) => {
                 console.log('new id ', json);
                 this.binIdMap[name] = json.id;
-                sendRequest(`https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/5d936e62ff3d100ac6c48eeb`, "PUT", this.binIdMap)
+                sendRequest(apiUrlIndex, "PUT", this.binIdMap)
                 this.persistPrefs()
             })
     }
@@ -65,7 +70,7 @@ class Api {
         console.log('persist prefs', this.prefs);
         const id = this.binIdMap[this.name];
         if (id !== undefined) {
-            sendRequest(`https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/${id}`, "PUT", this.prefs)
+            sendRequest(apiUrlCreatorCache(id), "PUT", this.prefs)
         } else {
             console.log('name undefined ', this.binIdMap)
         }
@@ -90,6 +95,15 @@ class Api {
         if (this.prefs.data.preferences[category]['dislikes'].indexOf(value) === -1) {
             this.prefs.data.preferences[category]['dislikes'].push(value);
             this.persistPrefs()
+        }
+    }
+
+    toggleDefaultCategory(category) {
+        let index = this.prefs.data.defaultCategories.indexOf(category);
+        if (index === -1) {
+            this.prefs.data.defaultCategories.push(category);
+        } else {
+            delete this.prefs.data.defaultCategories.splice(index, 1);
         }
     }
 }
