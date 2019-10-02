@@ -117,7 +117,7 @@ mainContent.addEventListener('click', function(e) {
 
 
 /* Api class use example: */
-let user = new Api('zachtest');
+// const user = new Api(username)
 // api.deferredFilter(mainContent);
 
 /* using setTimeout() to simulate delay */
@@ -286,7 +286,10 @@ async function updateAllCards() {
         mainContent.innerHTML += card;
         // console.log(card);
     });
-    user.deferredFilter()
+     /**********************************
+     enable filtering by calling:
+     user.deferredFilter()
+     **********************************/
     addSignInEventListener();
 
 };

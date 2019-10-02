@@ -56,7 +56,7 @@ class Api {
                     let dislikes = this.getPreferences(category)['dislikes'];
                     console.log(dislikes)
                     if (dislikes.indexOf(key) !== -1) {
-                        console.log('hiding ' + key + ' in category ' + category)
+                        console.log('hiding ' + key + ' in category ' + category + '!')
                         child.classList.add('hidden')
                     }
                 } else {
