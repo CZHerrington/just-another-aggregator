@@ -133,7 +133,8 @@ document.addEventListener('wheel', (e) => {
 
 
 /* Api class use example: */
-// let api = new Api('example#3')
+// const user = new Api('Zachary')
+// api.deferredFilter(mainContent);
 
 /* using setTimeout() to simulate delay */
 // setTimeout(
@@ -153,7 +154,7 @@ const moviesAPIKey = "8895918e5c66d703e2331fdd92606203";
 
 //  template html
 const musicCardTemplate = `
-    <div data-index="<%= id %>" class="small-card music-card">
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
             <h2><%= track %></h2>
@@ -170,7 +171,7 @@ const musicTemplateFn = _.template(musicCardTemplate);
 
 //  template html
 const movieCardTemplate = `
-    <div data-index="<%= id %>" class="small-card music-card">
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
             <h2><%= title %></h2>
@@ -187,7 +188,7 @@ const movieTemplateFn = _.template(movieCardTemplate);
 
 //  template html
 const bookCardTemplate = `
-    <div data-index="<%= id %>" class="small-card music-card">
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
             <h2><%= title %></h2>
@@ -214,7 +215,7 @@ function updateTrendMusicData() {
             responseMusic.trending.forEach((item) => {
 
                 // Generate the HTML template
-                let html = musicTemplateFn({'id': item.intChartPlace, 'artist': item.strArtist, 'track': item.strTrack, 'album': item.strAlbum, 'art': item.strTrackThumb + "/preview"});
+                let html = musicTemplateFn({'id': item.intChartPlace, 'artist': item.strArtist, 'track': item.strTrack, 'album': item.strAlbum, 'art': item.strTrackThumb + "/preview", 'key': item.strArtist, 'category': 'music'});
                 
                 resultsArray.push(html);
             })
@@ -233,7 +234,7 @@ function updateMovieData() {
             responseMovies.results.forEach((item) => {
                 
                 // Generate HTML template
-                let html = movieTemplateFn({id: item.id, title: item.title, genre: item.genre_ids[0], date: item.release_date, art: "https://image.tmdb.org/t/p/w200" + item.poster_path});
+                let html = movieTemplateFn({id: item.id, title: item.title, genre: item.genre_ids[0], date: item.release_date, art: "https://image.tmdb.org/t/p/w200" + item.poster_path, 'key': item.title, 'category': 'movies'});
                 
                 resultsArray.push(html);
             })
@@ -251,7 +252,7 @@ function updateFictionBookData() {
             let resultsArray = [];
             responseBooks.results.books.forEach((item) => {
 
-                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Fiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image});
+                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Fiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
 
                 resultsArray.push(html);
             })
@@ -270,7 +271,7 @@ function updateNonfictionBookData() {
             let resultsArray = [];
             responseBooks.results.books.forEach((item) => {
 
-                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Nonfiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image});
+                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Nonfiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
 
                 resultsArray.push(html);
             })
@@ -301,7 +302,10 @@ async function updateAllCards() {
         mainContent.innerHTML += card;
         // console.log(card);
     });
-
+     /**********************************
+     enable filtering by calling:
+     user.deferredFilter()
+     **********************************/
     addSignInEventListener();
 
 };
