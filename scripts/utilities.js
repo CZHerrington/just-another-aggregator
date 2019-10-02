@@ -4,6 +4,17 @@ function get(url) {
         .catch((err) => console.error('GET request error: ', err))
 };
 
+/**
+ * @name filterContentByKeyValue
+ * @param {string} key key value to filter by (ex: 'title' or 'artist')
+ * @param {object[]} filteredArray array of objects to filter by key
+ * @param {string[]} valueArray array of strings, is list of values to filter out
+ */
+const filterContentByKeyValue = (key, filteredArray, valueArray) => filteredArray.filter((item) => {
+    let value = item[key];
+    return (valueArray.indexOf(value) === -1);
+});
+
 function sendRequest(url, method, body = undefined) {
     const options = {
         method: method,
