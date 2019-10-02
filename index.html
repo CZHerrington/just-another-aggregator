@@ -7,8 +7,10 @@
 
         <!-- Bootstrap CSS -->
         <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-        <link rel="stylesheet" href="styles/styles.css">
+        
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles/styles.css">
+        
 
         <title></title>
     </head>
@@ -17,13 +19,40 @@
         <div class="full-page-background"></div>
 
         <header id="header" class="header">
-            <nav>navbar</nav>
+            <nav class="headerNav">
+                <h1 class="logoText">Just another aggregator.</h1>
+                <img class="expandCollapse" id="expandCollapse" src="images/expand-button.svg">
+            </nav>
         </header>
 
+        <div class="settingsOverlay" id="settingsOverlay">
+            <div class="categoryToggleRow" id="categoryToggleRow">
+                <div class="categoryToggle musicToggle" id="musicToggle">Music</div>
+                <div class="categoryToggle moviesToggle activated" id="moviesToggle">Movies</div>
+                <div class="categoryToggle tvToggle" id="tvToggle">TV</div>
+                <div class="categoryToggle booksToggle" id="booksToggle">Books</div>
+                <div class="categoryToggle newsToggle activated" id="newsToggle">News</div>
+            </div>
+            <hr class="settingsHr">
+        </div>
 
-        <main>
+        <main id="mainContent">
+            <div class="small-card settings-card">
+                <h1 class="welcomeHeader">Choose Your Account:</h1>
+                <div class="signInRow">
+                    <select class="userSelect" name="Username">
+                        <option value="New User">New User</option>
+                        <option value="James">James</option>
+                        <option value="Josh">Josh</option>
+                        <option value="Chris">Chris</option>
+                        <option value="Zach">Zach</option>
+                    </select> 
+                    <div class="signInButton">Sign In</div>
+                </div>
+            </div>
+            </div>
             <div class="small-card music-card">
-                <img class="album-art" src="https://consequenceofsound.net/wp-content/uploads/2019/06/taylor-swift-LOVER.jpg">
+                <img class="album-art" loading="lazy" src="https://consequenceofsound.net/wp-content/uploads/2019/06/taylor-swift-LOVER.jpg">
                 <div class="song-info">
                     <h2>You Need To Calm Down</h2>
                     <h3>Taylor Swift</h3>
@@ -35,7 +64,7 @@
                 </div>
             </div>
             <div class="small-card music-card">
-                <img class="album-art" src="https://upload.wikimedia.org/wikipedia/en/3/38/When_We_All_Fall_Asleep%2C_Where_Do_We_Go%3F.png">
+                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/3/38/When_We_All_Fall_Asleep%2C_Where_Do_We_Go%3F.png">
                 <div class="song-info">
                     <h2>Bad Guy</h2>
                     <h3>Billie Eilish</h3>
@@ -46,9 +75,8 @@
                     <img class="voteButton" src="images/thumbs-down-silhouette.svg">
                 </div>
             </div>
-                
             <div class="small-card music-card">
-                <img class="album-art" src="https://upload.wikimedia.org/wikipedia/en/d/d6/Lights_Ellie_Single.PNG">
+                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/d/d6/Lights_Ellie_Single.PNG">
                 <div class="song-info">
                     <h2>Lights</h2>
                     <h3>Ellie Goulding</h3>
@@ -60,7 +88,7 @@
                 </div>
             </div>
             <div class="small-card music-card">
-                <img class="album-art" src="https://upload.wikimedia.org/wikipedia/en/e/e4/Death_of_a_Bachelor.jpg">
+                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/e/e4/Death_of_a_Bachelor.jpg">
                 <div class="song-info">
                     <h2>Victorius</h2>
                     <h3>Panic at the Disco</h3>
@@ -72,7 +100,7 @@
                 </div>
             </div>
             <div class="small-card music-card">
-                <img class="album-art" src="https://upload.wikimedia.org/wikipedia/en/9/90/Scorpion_by_Drake.jpg">
+                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/9/90/Scorpion_by_Drake.jpg">
                 <div class="song-info">
                     <h2>In My Feelings</h2>
                     <h3>Drake</h3>
@@ -84,7 +112,7 @@
                 </div>
             </div>
             <div class="small-card music-card">
-                <img class="album-art" src="https://upload.wikimedia.org/wikipedia/en/f/f1/Without_Me_%E2%80%93_Halsey.png">
+                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/f/f1/Without_Me_%E2%80%93_Halsey.png">
                 <div class="song-info">
                     <h2>Without Me</h2>
                     <h3>Halsey</h3>
@@ -114,5 +142,6 @@
     <script src="apikey.js"></script>
     <script src="scripts/utilities.js"></script>
     <script src="scripts/main.js"></script>
+    <script src="scripts/toggleSettings.js"></script>
     </body>
 </html>
