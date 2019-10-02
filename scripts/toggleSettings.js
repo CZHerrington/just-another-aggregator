@@ -52,25 +52,40 @@ function addSignInEventListener() {
 
     signInCard.addEventListener('click', function(e) {
 
+        const usernameSelect = document.querySelector("#usernameSelect");
+
         if (e.target.id === 'signInButton') {
             console.log(e);
-            if (document.querySelector("#usernameSelect").value === "New User") {
+            if (usernameSelect.value === "New User") {
 
                 document.querySelector("#settings-card-default").classList.toggle("hidden");
                 document.querySelector("#settings-card-overlay").classList.toggle("hidden");   
 
             } else {
+                console.log("selected other username");
+                let username = usernameSelect.value;
 
                 // UPDATE THE PAGE FOR THE USER SELECTED
+                document.querySelector("#welcomeHeader").textContent = `Welcome, ${username}`;
             }
         }
 
         if (e.target.id === 'newUserSignInButton') {
-            console.log(e);
+
             // UPDATE, create and repopulate based on the new user name
 
+            // Clears the input field
+            let username = document.querySelector("#userNameInputField").value
+            document.querySelector("#userNameInputField").value = '';
+
+            // Flips back to the other screen
             document.querySelector("#settings-card-default").classList.toggle("hidden");
             document.querySelector("#settings-card-overlay").classList.toggle("hidden");  
+
+            // Change the welcome text to the new user's name and updates the dropdown options
+            document.querySelector("#welcomeHeader").textContent = `Welcome, ${username}`;
+            usernameSelect.innerHTML += `<option value="${username}" selected>${username}</option>`
+
         }
 
         
@@ -155,7 +170,22 @@ const movieCardTemplate = `
 // create a new template function with your html for movies
 const movieTemplateFn = _.template(movieCardTemplate);
 
-
+//  template html
+const bookCardTemplate = `
+    <div data-index="<%= id %>" class="small-card music-card">
+        <img class="album-art" src="<%= art %>">
+        <div class="song-info">
+            <h2><%= title %></h2>
+            <h3><%= rank %></h3>
+            <h3><i><%= author %></i></h3>
+        </div>
+        <div class="upvoteDownvote">
+            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
+            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+        </div>
+    </div>`; 
+// create a new template function with your html for books
+const bookTemplateFn = _.template(bookCardTemplate);
 
 
 // GETTER FUNCTIONS
@@ -184,7 +214,7 @@ function updateMovieData() {
     return get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${moviesAPIKey}`)
         .then(responseMovies => {
 
-            let resultsArray = []
+            let resultsArray = [];
             responseMovies.results.forEach((item) => {
                 
                 // Generate HTML template
@@ -197,40 +227,43 @@ function updateMovieData() {
         });
 }
 
+// Returns an array of HTML templates of top fiction books
+function updateFictionBookData() {
+    
+    return get(`https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=HfHxWUxYzqeXzAYx2V26or4nU9mOnw8n`)
+        .then(responseBooks => {
 
+            let resultsArray = [];
+            responseBooks.results.books.forEach((item) => {
 
-// MUSIC LOGIC
-// // call the music template function, passing it data. This returns compiled html
-// function createMusicList(responseMusic) {
-//     let musicArray = _.reverse(responseMusic.trending);
-//     // let musicArray4 = musicArray.splice(0,4);
-//     let resultsArray = [];
-//     musicArray.forEach(
-//         (item) => {
-//             let html = musicTemplateFn({'id': item.intChartPlace, 'artist': item.strArtist, 'track': item.strTrack, 'album': item.strAlbum, 'art': item.strTrackThumb + "/preview"});
-//             // mainContent.innerHTML += html;
-//             resultsArray += html;
-//         }
-//     )
-//     return resultsArray;
-// }
+                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Fiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image});
 
-// // MOVIE LOGIC
-// call the movies template function, passing it data. This returns compiled html
-// function createMoviesList(responseMovies) {
-//     let movieArray = responseMovies.results;
-//     // let movieArray4 = movieArray.splice(0,10);
-//     let resultsArray = [];
-//     movieArray.forEach(
-//         (item) => {
-//             let html = movieTemplateFn({id: item.id, title: item.title, genre: item.genre_ids[0], date: item.release_date, art: "https://image.tmdb.org/t/p/w200" + item.poster_path});
-//             // mainContent.innerHTML += html;
-//             resultsArray += html;
-//         }
-//     )
+                resultsArray.push(html);
+            })
 
-//     return resultsArray;
-// }
+            return resultsArray;
+        });
+    
+}
+
+// Returns an array of HTML templates of top nonfiction books
+function updateNonfictionBookData() {
+    
+    return get(`https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key=HfHxWUxYzqeXzAYx2V26or4nU9mOnw8n`)
+        .then(responseBooks => {
+
+            let resultsArray = [];
+            responseBooks.results.books.forEach((item) => {
+
+                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Nonfiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image});
+
+                resultsArray.push(html);
+            })
+
+            return resultsArray;
+        });
+    
+}
 
 
 // Generates the initial cards
@@ -238,11 +271,13 @@ async function updateAllCards() {
 
     let cardArray = [];
 
-    let cardArray1 = await updateTrendMusicData();
-    let cardArray2 = await updateMovieData();
+    let musicArray = await updateTrendMusicData();
+    let movieArray = await updateMovieData();
+    let nfBookArray = await updateNonfictionBookData();
+    let fBookArray = await updateFictionBookData();
 
-    cardArray = cardArray.concat(await cardArray1);
-    cardArray = cardArray.concat(await cardArray2);
+    cardArray = cardArray.concat(await musicArray, await movieArray, await nfBookArray, await fBookArray);
+    // cardArray = cardArray.concat(await cardArray2);
 
     cardArray = _.shuffle(cardArray);
 
