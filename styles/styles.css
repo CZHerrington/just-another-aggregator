@@ -180,10 +180,6 @@ main.hidden {
     opacity: 0;
 }
 
-main.displayNone {
-    
-}
-
 .categoryToggleRow {
     width: 80%;
     display: flex;
@@ -499,6 +495,12 @@ main.displayNone {
 
     .music-card .song-info {
         margin-left: 10px;
+    }
+
+    .categoryToggle.genreToggle {
+        height: 40px;
+        margin-top: 3px;
+        margin-bottom: 3px;
     }
 }
 

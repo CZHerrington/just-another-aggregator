@@ -84,7 +84,7 @@ class Api {
     _addName(name) {
         //  create new id and prefs for user
         this.prefs.name = name;
-        this.name = name;
+        this.name = name;  // NOTE FROM JOSH: what does this line do? Isn't this set in the constructor?
         sendRequest(apiUrl, "POST", this.prefs)
             .then((json) => {
                 this.binIdMap[name] = json.id;
@@ -97,7 +97,7 @@ class Api {
         if (id !== undefined) {
             sendRequest(apiUrlCreatorCache(id), "PUT", this.prefs)
         } else {
-
+            
         }
     }
 
