@@ -102,7 +102,8 @@ mainContent.addEventListener('click', function(e) {
 
 
 /* Api class use example: */
-// let api = new Api('example#3')
+let user = new Api('zachtest');
+// api.deferredFilter(mainContent);
 
 /* using setTimeout() to simulate delay */
 // setTimeout(
@@ -122,7 +123,7 @@ const moviesAPIKey = "8895918e5c66d703e2331fdd92606203";
 
 //  template html
 const musicCardTemplate = `
-    <div data-index="<%= id %>" class="small-card music-card">
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
             <h2><%= track %></h2>
@@ -168,7 +169,7 @@ function updateTrendMusicData() {
             responseMusic.trending.forEach((item) => {
 
                 // Generate the HTML template
-                let html = musicTemplateFn({'id': item.intChartPlace, 'artist': item.strArtist, 'track': item.strTrack, 'album': item.strAlbum, 'art': item.strTrackThumb + "/preview"});
+                let html = musicTemplateFn({'id': item.intChartPlace, 'artist': item.strArtist, 'track': item.strTrack, 'album': item.strAlbum, 'art': item.strTrackThumb + "/preview", 'key': item.strArtist, 'category': 'music'});
                 
                 resultsArray.push(html);
             })
@@ -250,7 +251,7 @@ async function updateAllCards() {
         mainContent.innerHTML += card;
         // console.log(card);
     });
-
+    user.deferredFilter()
     addSignInEventListener();
 
 };
