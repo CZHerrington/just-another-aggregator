@@ -7,6 +7,7 @@
 const expandCollapse = document.querySelector("#expandCollapse");
 const settingsOverlay = document.querySelector("#settingsOverlay");
 const mainContent = document.querySelector("#mainContent");
+const header = document.querySelector("#header");
 
 // const settingsCardDefault = document.querySelector("#settings-card-default");
 // const settingsCardOverlay = document.querySelector("#settings-card-overlay");
@@ -23,6 +24,8 @@ expandCollapse.addEventListener('click', function(e) {
     expandCollapse.classList.toggle('activated');
     settingsOverlay.classList.toggle('activated');
     mainContent.classList.toggle('hidden');
+    // Scrolls back to the top of the page
+    window.scrollTo({top: 0, behavior: 'smooth'});
 });
 
 // In the settings pane, toggles the categories and genres
@@ -99,6 +102,19 @@ mainContent.addEventListener('click', function(e) {
     }
 });
 
+
+
+// SCROLL HANDLER
+document.addEventListener('wheel', (e) => {
+    let classes = header.classList;
+    let windowScroll = window.scrollY;
+    if (windowScroll > 40 && !classes.contains('scrolled')){
+        header.classList.add('scrolled');
+    }
+    if (windowScroll < 40 && classes.contains('scrolled')){
+        header.classList.remove('scrolled');
+    }
+}, { capture: false, passive: true });
 
 
 
