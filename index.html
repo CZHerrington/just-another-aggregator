@@ -107,11 +107,11 @@
 
 
         <main id="mainContent">
-            <div class="small-card settings-card">
-                <div class="default-view">
+            <div class="small-card settings-card" id="signInCard">
+                <div class="default-view" id="settings-card-default">
                     <h1 class="welcomeHeader">Choose Your Account:</h1>
                     <div class="signInRow">
-                        <select class="userSelect" name="Username">
+                        <select class="userSelect" name="Username" id="usernameSelect">
                             <option value="New User">New User</option>
                             <option value="James">James</option>
                             <option value="Josh">Josh</option>
@@ -121,7 +121,7 @@
                         <div class="signInButton" id="signInButton">Sign In</div>
                     </div>
                 </div>
-                <div class="sign-in-overlay hidden">
+                <div class="sign-in-overlay hidden" id="settings-card-overlay">
                     <h1 class="welcomeHeader">Choose Your Username:</h1>
                     <div class="signInRow">
                         <input class="usernameInputField">
@@ -129,8 +129,7 @@
                     </div>
                 </div>
             </div>
-            </div>
-            <div class="small-card music-card">
+            <!-- <div class="small-card music-card">
                 <img class="album-art" loading="lazy" src="https://consequenceofsound.net/wp-content/uploads/2019/06/taylor-swift-LOVER.jpg">
                 <div class="song-info">
                     <h2>You Need To Calm Down</h2>
@@ -213,15 +212,7 @@
                     <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
                     <img class="voteButton" src="images/thumbs-down-silhouette.svg">
                 </div>
-            </div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
+            </div> -->
         </main>
 
     </body>
@@ -229,9 +220,8 @@
         <!-- js files -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
-    <script src="apikey.js"></script>
     <script src="scripts/utilities.js"></script>
-    <script src="scripts/main.js"></script>
+    <!-- <script src="scripts/main.js"></script> -->
     <script src="scripts/toggleSettings.js"></script>
     </body>
 </html>
