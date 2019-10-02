@@ -117,7 +117,7 @@ mainContent.addEventListener('click', function(e) {
 
 
 /* Api class use example: */
-// const user = new Api(username)
+// const user = new Api('Zachary')
 // api.deferredFilter(mainContent);
 
 /* using setTimeout() to simulate delay */
@@ -155,7 +155,7 @@ const musicTemplateFn = _.template(musicCardTemplate);
 
 //  template html
 const movieCardTemplate = `
-    <div data-index="<%= id %>" class="small-card music-card">
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
             <h2><%= title %></h2>
@@ -172,7 +172,7 @@ const movieTemplateFn = _.template(movieCardTemplate);
 
 //  template html
 const bookCardTemplate = `
-    <div data-index="<%= id %>" class="small-card music-card">
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
             <h2><%= title %></h2>
@@ -218,7 +218,7 @@ function updateMovieData() {
             responseMovies.results.forEach((item) => {
                 
                 // Generate HTML template
-                let html = movieTemplateFn({id: item.id, title: item.title, genre: item.genre_ids[0], date: item.release_date, art: "https://image.tmdb.org/t/p/w200" + item.poster_path});
+                let html = movieTemplateFn({id: item.id, title: item.title, genre: item.genre_ids[0], date: item.release_date, art: "https://image.tmdb.org/t/p/w200" + item.poster_path, 'key': item.title, 'category': 'movies'});
                 
                 resultsArray.push(html);
             })
@@ -236,7 +236,7 @@ function updateFictionBookData() {
             let resultsArray = [];
             responseBooks.results.books.forEach((item) => {
 
-                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Fiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image});
+                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Fiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
 
                 resultsArray.push(html);
             })
@@ -255,7 +255,7 @@ function updateNonfictionBookData() {
             let resultsArray = [];
             responseBooks.results.books.forEach((item) => {
 
-                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Nonfiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image});
+                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Nonfiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
 
                 resultsArray.push(html);
             })

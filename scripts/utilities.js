@@ -60,7 +60,7 @@ class Api {
                         child.classList.add('hidden')
                     }
                 } else {
-                    console.log('Someone forgot to set a category!')
+                    console.warn('Someone forgot to set a category!')
                 }
             }
         })
