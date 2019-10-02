@@ -146,7 +146,7 @@ function updateTrendMusicData() {
         createMusicList(responseMusic);
         //console.log("response is ", response);
     });
-          
+
 }
 
 
