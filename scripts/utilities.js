@@ -20,7 +20,7 @@ const emptyPrefs = {"name":"","hash":"","data":{"preferences":{"music":{"likes":
 const apiUrl = `https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/`;
 const indexId = '5d936e62ff3d100ac6c48eeb';
 
-const apiUrlCreator = (id) => `${apiUrl}${id}/latest?nocache=${Math.random()}`;
+const apiUrlCreator = (id) => `${apiUrl}${id}/latest?nocache=${Math.random()}`; // nocache param is to prevent browser from returning 304 calls
 const apiUrlCreatorCache = (id) => `${apiUrl}${id}`;
 const apiUrlIndex = `${apiUrl}${indexId}`;
 
