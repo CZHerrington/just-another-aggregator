@@ -1,8 +1,22 @@
 "use strict";
 
+/* Api class use example: */
+// let api = new Api('example#3')
+
+/* using setTimeout() to simulate delay */
+// setTimeout(
+//     ()=> {
+//         api.setDislike('movies', '50 first dates')
+//         api.setLike('music', 'basically everything')
+//         api.toggleDefaultCategory('movies')
+
+//         const musicPrefs = api.getPreferences('music')
+//         const defaultCategories = api.getDefaultCategories()
+//     }, 4000
+// )
+
 //jquery to select the element on the DOM
 const main = $('main')
-
 
 //  template html
 const musicCardTemplate = `

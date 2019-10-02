@@ -26,32 +26,110 @@
         </header>
 
         <div class="settingsOverlay" id="settingsOverlay">
+            <!-- CATEGORIES -->
             <div class="categoryToggleRow" id="categoryToggleRow">
-                <div class="categoryToggle musicToggle" id="musicToggle">Music</div>
-                <div class="categoryToggle moviesToggle activated" id="moviesToggle">Movies</div>
-                <div class="categoryToggle tvToggle" id="tvToggle">TV</div>
-                <div class="categoryToggle booksToggle" id="booksToggle">Books</div>
-                <div class="categoryToggle newsToggle activated" id="newsToggle">News</div>
+                <div class="categoryToggle" id="musicToggle">Music</div>
+                <div class="categoryToggle activated" id="moviesToggle">Movies</div>
+                <div class="categoryToggle" id="tvToggle">TV</div>
+                <div class="categoryToggle" id="booksToggle">Books</div>
+                <div class="categoryToggle activated" id="newsToggle">News</div>
+            </div>
+            <hr class="settingsHr">
+            <div class="genreFilterRow">
+                <!-- MUSIC -->
+                <span class="categoryTitleLeft">Music</span>
+                <div class="genreToggleWrapper" id="musicToggleRow">
+                    <div class="categoryToggle genreToggle" id="musicToggleRowPop">Pop</div>
+                    <div class="categoryToggle genreToggle activated" id="musicToggleRowRock">Rock</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowAlt">Alt</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowEDM">EDM</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowKids">Kids</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowJazz">Jazz</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowGospel">Gospel</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowSoundtrack">Soundtrack</div>
+                    <div class="categoryToggle genreToggle activated" id="musicToggleRowClassical">Classical</div>
+                </div>
+            </div>
+            <hr class="settingsHr">
+            <div class="genreFilterRow">
+                <!-- MOVIES -->
+                <span class="categoryTitleRight">Movies</span>
+                <div class="genreToggleWrapper" id="movieToggleRow">
+                    <div class="categoryToggle genreToggle" id="movieToggleRowAction">Action</div>
+                    <div class="categoryToggle genreToggle activated" id="movieToggleRowAdventure">Adventure</div>
+                    <div class="categoryToggle genreToggle" id="movieToggleRowSciFi">SciFi</div>
+                    <div class="categoryToggle genreToggle" id="movieToggleRowDrama">Drama</div>
+                    <div class="categoryToggle genreToggle" id="movieToggleRowRomance">Romance</div>
+                    <div class="categoryToggle genreToggle" id="movieToggleRowSports">Sports</div>
+                    <div class="categoryToggle genreToggle activated" id="movieToggleRowFantasy">Fantasy</div>
+                </div>
+            </div>
+            <hr class="settingsHr">
+            <div class="genreFilterRow">
+                <!-- TV -->
+                <span class="categoryTitleLeft">&nbsp;&nbsp;&nbsp;TV&nbsp;&nbsp;&nbsp;</span>
+                <div class="genreToggleWrapper" id="tvToggleRow">
+                        <div class="categoryToggle genreToggle" id="tvToggleRowSitCom">SitCom</div>
+                        <div class="categoryToggle genreToggle activated" id="tvToggleRowCrime">Crime</div>
+                        <div class="categoryToggle genreToggle" id="tvToggleRowDrama">Drama</div>
+                        <div class="categoryToggle genreToggle" id="tvToggleRowSoap">Soap</div>
+                        <div class="categoryToggle genreToggle" id="tvToggleRowCooking">Cooking</div>
+                        <div class="categoryToggle genreToggle" id="tvToggleRowReality">Reality</div>
+                </div>
+            </div>
+            <hr class="settingsHr">
+            <div class="genreFilterRow">
+                <!-- BOOKS -->
+                <span class="categoryTitleRight">Books</span>
+                <div class="genreToggleWrapper" id="bookToggleRow">
+                    <div class="categoryToggle genreToggle activated" id="bookToggleRowBestsellers">Bestsellers</div>
+                    <div class="categoryToggle genreToggle" id="bookToggleRowNovel">Novel</div>
+                    <div class="categoryToggle genreToggle activated" id="bookToggleRowBiograpy">Biograpy</div>
+                    <div class="categoryToggle genreToggle activated" id="bookToggleRowHistory">History</div>
+                    <div class="categoryToggle genreToggle" id="bookToggleRowMystery">Mystery</div>
+                    <div class="categoryToggle genreToggle" id="bookToggleRowClassic">Classic</div>
+                </div>
+            </div>
+            <hr class="settingsHr">
+            <div class="genreFilterRow">
+                <!-- NEWS -->
+                <span class="categoryTitleLeft">News</span>
+                <div class="genreToggleWrapper" id="newsToggleRow">
+                    <div class="categoryToggle genreToggle" id="newsToggleRowGlobal">Global</div>
+                    <div class="categoryToggle genreToggle activated" id="newsToggleRowPolitical">Political</div>
+                    <div class="categoryToggle genreToggle" id="newsToggleRowBusiness">Business</div>
+                    <div class="categoryToggle genreToggle" id="newsToggleRowFinance">Finance</div>
+                    <div class="categoryToggle genreToggle" id="newsToggleRowSports">Sports</div>
+                </div>
             </div>
             <hr class="settingsHr">
         </div>
 
+
         <main id="mainContent">
-            <div class="small-card settings-card">
-                <h1 class="welcomeHeader">Choose Your Account:</h1>
-                <div class="signInRow">
-                    <select class="userSelect" name="Username">
-                        <option value="New User">New User</option>
-                        <option value="James">James</option>
-                        <option value="Josh">Josh</option>
-                        <option value="Chris">Chris</option>
-                        <option value="Zach">Zach</option>
-                    </select> 
-                    <div class="signInButton">Sign In</div>
+            <div class="small-card settings-card" id="signInCard">
+                <div class="default-view" id="settings-card-default">
+                    <h1 class="welcomeHeader">Choose Your Account:</h1>
+                    <div class="signInRow">
+                        <select class="userSelect" name="Username" id="usernameSelect">
+                            <option value="New User">New User</option>
+                            <option value="James">James</option>
+                            <option value="Josh">Josh</option>
+                            <option value="Chris">Chris</option>
+                            <option value="Zach">Zach</option>
+                        </select> 
+                        <div class="signInButton" id="signInButton">Sign In</div>
+                    </div>
+                </div>
+                <div class="sign-in-overlay hidden" id="settings-card-overlay">
+                    <h1 class="welcomeHeader">Choose Your Username:</h1>
+                    <div class="signInRow">
+                        <input class="usernameInputField">
+                        <div class="signInButton" id="newUserSignInButton">Sign In</div>
+                    </div>
                 </div>
             </div>
-            </div>
-            <div class="small-card music-card">
+            <!-- <div class="small-card music-card">
                 <img class="album-art" loading="lazy" src="https://consequenceofsound.net/wp-content/uploads/2019/06/taylor-swift-LOVER.jpg">
                 <div class="song-info">
                     <h2>You Need To Calm Down</h2>
@@ -123,15 +201,18 @@
                     <img class="voteButton" src="images/thumbs-down-silhouette.svg">
                 </div>
             </div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
-            <div class="small-card"></div>
+            <div class="small-card music-card">
+                <img class="album-art" loading="lazy" src="https://image.tmdb.org/t/p/w200/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg">
+                <div class="song-info">
+                    <h2>Toy Story 4</h2>
+                    <h3>Jan 1, 2019</h3>
+                    <h3><i>Kids</i></h3>
+                </div>
+                <div class="upvoteDownvote">
+                    <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
+                    <img class="voteButton" src="images/thumbs-down-silhouette.svg">
+                </div>
+            </div> -->
         </main>
 
     </body>
@@ -139,9 +220,8 @@
         <!-- js files -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
-    <script src="apikey.js"></script>
     <script src="scripts/utilities.js"></script>
-    <script src="scripts/main.js"></script>
+    <!-- <script src="scripts/main.js"></script> -->
     <script src="scripts/toggleSettings.js"></script>
     </body>
 </html>
