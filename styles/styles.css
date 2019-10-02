@@ -282,6 +282,10 @@ main.hidden {
     flex-grow: 1;
 }
 
+.small-card.hidden {
+    display: none;
+}
+
 .small-card:hover {
     transform: scale3d(1.03, 1.03, 1.03);
     z-index: 2;
@@ -395,7 +399,7 @@ main.hidden {
 
 /* MUSIC CARD */
 
-.small-card.music-card {
+.music-card {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
