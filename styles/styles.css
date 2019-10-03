@@ -498,6 +498,15 @@ main.hidden {
     overflow: hidden;
 }
 
+.titleLinks {
+    text-decoration: none;
+    color: #ddd;
+}
+
+.titleLinks:hover {
+    color: #fff;
+}
+
 
 /* Up / Down Vote Buttons */
 .upvoteDownvote {

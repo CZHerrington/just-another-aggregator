@@ -286,7 +286,9 @@ const newsCardTemplate = `
     <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
-            <h2 class="newsTitle"><%= section %>: &nbsp;<%= title %></h2>
+            <a href="<%= id %>" target="_blank" class="titleLinks">
+                <h2 class="newsTitle"><%= section %>: &nbsp;<%= title %></h2>
+            </a>
         </div>
         <div class="upvoteDownvote">
             <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
@@ -297,7 +299,7 @@ const newsCardTemplate = `
 const newsTemplateFn = _.template(newsCardTemplate);
 
 
-// GETTER FUNCTIONS
+{// GETTER FUNCTIONS
 //Returns an array of HTML templates of the trending music data
 // function updateTrendMusicData() {
     
@@ -316,6 +318,7 @@ const newsTemplateFn = _.template(newsCardTemplate);
 //             return resultsArray;
 //         });
 // }
+}
 
 // Returns an array of HTML templates of the top movies
 function updateMovieData() {
