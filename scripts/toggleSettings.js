@@ -99,6 +99,10 @@ function addSignInEventListener() {
 mainContent.addEventListener('click', function(e) {
     if (e.target.classList.contains('voteDown')) {
         e.target.parentElement.parentElement.classList.toggle('hidden');
+        setTimeout(function() {
+            e.target.parentElement.parentElement.classList.toggle('removed')
+        }, 300);
+        // e.target.parentElement.parentElement.classList.toggle('removed');
     }
 });
 
@@ -284,7 +288,7 @@ function updateTrendMusicData() {
 // Returns an array of HTML templates of the top movies
 function updateMovieData() {
 
-    return get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${moviesAPIKey}`)
+    return get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${moviesAPIKey}`)
         .then(responseMovies => {
 
             let resultsArray = [];
@@ -306,7 +310,7 @@ function updateMovieData() {
 
 function updateTVData() {
 
-    return get(`https://api.themoviedb.org/3/trending/tv/day?api_key=${moviesAPIKey}`)
+    return get(`https://api.themoviedb.org/3/trending/tv/week?api_key=${moviesAPIKey}`)
         .then(responseTV => {
 
             let resultsArray = [];
@@ -380,8 +384,9 @@ async function updateAllCards() {
     cardArray = cardArray.concat(await musicArray, await movieArray, await tvArray, await nfBookArray, await fBookArray, await dzMusicArray);
     // cardArray = cardArray.concat(await cardArray2);
 
-    cardArray = _.shuffle(cardArray);
+    document.querySelector('#loadingAnimation').classList.toggle('hidden');
 
+    cardArray = _.shuffle(cardArray);
 
     cardArray.forEach((card) => {
         mainContent.innerHTML += card;
