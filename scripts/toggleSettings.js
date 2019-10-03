@@ -4,6 +4,7 @@
 // * * * DOM EVENT LISTENERS * * *
 // * * * * * * * * * * * * * * * *
 let user = null;
+const baseCategories = {"movies": true, "music": true, "books": true, "tv": true, "news": true};
 const expandCollapse = document.querySelector("#expandCollapse");
 const settingsOverlay = document.querySelector("#settingsOverlay");
 const mainContent = document.querySelector("#mainContent");
@@ -24,9 +25,13 @@ expandCollapse.addEventListener('click', function(e) {
     expandCollapse.classList.toggle('activated');
     settingsOverlay.classList.toggle('activated');
     mainContent.classList.toggle('hidden');
-
+    // filters categories if user is logged in
     if (!settingsOverlay.classList.contains('activated') && user !== null) {
         user.deferredFilter();
+    }
+    // filters categories if user is not logged in
+    if (user === null) {
+        baseDeferredFilter(baseCategories);
     }
     // Scrolls back to the top of the page
     window.scrollTo({top: 0, behavior: 'smooth'});
@@ -39,6 +44,9 @@ categoryToggleRow.addEventListener('click', function(e) {
     if (user !== null &&
         category !== 'category') {
         user.toggleDefaultCategory(category);
+    }
+    if (user === null) {
+        baseCategories[category] = ! baseCategories[category]
     }
 });
 musicToggleRow.addEventListener('click', function(e) {
@@ -88,6 +96,7 @@ function addSignInEventListener() {
 
             // Clears the input field
             let username = document.querySelector("#userNameInputField").value
+            // creates a new user or instantiates an existing one
             user = new User(username);
             document.querySelector("#userNameInputField").value = '';
 
