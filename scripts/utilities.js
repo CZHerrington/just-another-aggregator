@@ -46,6 +46,26 @@ class Api {
             .then(() => {this.requestPrefs(name)})
     }
 
+    deferredFilter() {
+        mainContent.childNodes.forEach((child) => {
+            if (child.nodeName === "DIV") {
+                console.log('found content div')
+                if (child.dataset.category !== undefined) {
+                    let key = child.dataset.key
+                    let category = child.dataset.category
+                    let dislikes = this.getPreferences(category)['dislikes'];
+                    console.log(dislikes)
+                    if (dislikes.indexOf(key) !== -1) {
+                        console.log('hiding ' + key + ' in category ' + category + '!')
+                        child.classList.add('hidden')
+                    }
+                } else {
+                    console.warn('Someone forgot to set a category!')
+                }
+            }
+        })
+    }
+
     requestPrefs(name) {
         if (this.binIdMap === {}) console.warn('ONLY CALL .requestPrefs() AFTER binIdMap IS POPULATED -- OTHERWISE `name` WILL BE OVERWRITTEN')
         if (!this.binIdMap[name]) {
@@ -57,13 +77,14 @@ class Api {
             // nocache is to avoid browser 304 responses
             sendRequest(apiUrlCreator(id), 'GET')
                 .then((json) => {this.prefs = json})
+                .then(() => {this.deferredFilter()})
         }
     }
 
     _addName(name) {
         //  create new id and prefs for user
         this.prefs.name = name;
-        this.name = name;
+        this.name = name;  // NOTE FROM JOSH: what does this line do? Isn't this set in the constructor?
         sendRequest(apiUrl, "POST", this.prefs)
             .then((json) => {
                 this.binIdMap[name] = json.id;
@@ -76,11 +97,12 @@ class Api {
         if (id !== undefined) {
             sendRequest(apiUrlCreatorCache(id), "PUT", this.prefs)
         } else {
-
+            
         }
     }
 
     getPreferences(category) {
+        console.log('getting ' + category, this.prefs.data.preferences)
         return _.get(this.prefs.data.preferences, category);
     }
 
