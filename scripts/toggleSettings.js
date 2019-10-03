@@ -291,7 +291,9 @@ const tvCardTemplate = `
     <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
-            <h2><%= title %></h2>
+            <a href=<%= url %> target="_blank" class="titleLinks">
+                <h2><%= title %></h2>
+            </a>
             <h3>Rating: <%= rating %></h3>
             <h3><i><%= genre %> Show</i></h3>
         </div>
@@ -392,8 +394,12 @@ function updateTVData() {
 
             let resultsArray = [];
             responseTV.results.forEach((item) => {
+
+                // Create the Google 'Lucky' search query components
+                let tvSearch = encodeURIComponent(item.name); 
+
                 // Generate HTML template
-                let html = tvTemplateFn({id: item.id, title: item.name, genre: tvGenre[item.genre_ids[0]], rating: item.vote_average, art: "https://image.tmdb.org/t/p/w200" + item.poster_path, 'key': item.name, 'category': 'tv'});
+                let html = tvTemplateFn({id: item.id, title: item.name, url: `https://www.google.com/search?q=${tvSearch}+show+trailer+youtube&btnI`, genre: tvGenre[item.genre_ids[0]], rating: item.vote_average, art: "https://image.tmdb.org/t/p/w200" + item.poster_path, 'key': item.name, 'category': 'tv'});
                 
                 // item.vote_average will return the average rating of the show/movie
                 // item.first_air_date will return the average rating of the show/movie
@@ -415,7 +421,9 @@ function updateFictionBookData() {
             let resultsArray = [];
             responseBooks.results.books.forEach((item) => {
                 
+                // Create the Google 'Lucky' search query components
                 let bookSearch = encodeURIComponent(item.author + ' ' + _.startCase(_.toLower(item.title))); 
+
                 let html = bookTemplateFn({id: item.primary_isbn10,url: `https://www.google.com/search?q=${bookSearch}+goodreads&btnI`,rank: "NYT Fiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
 
                 resultsArray.push(html);
@@ -435,7 +443,9 @@ function updateNonfictionBookData() {
             let resultsArray = [];
             responseBooks.results.books.forEach((item) => {
 
+                // Create the Google 'Lucky' search query components
                 let bookSearch = encodeURIComponent(item.author + ' ' + _.startCase(_.toLower(item.title))); 
+
                 let html = bookTemplateFn({id: item.primary_isbn10,url: `https://www.google.com/search?q=${bookSearch}+goodreads&btnI`,rank: "NYT Nonfiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
 
                 resultsArray.push(html);
@@ -456,11 +466,14 @@ function updateNewsData() {
 
             let resultsArray = [];
             let url;
+            let urlCount = 0;
             responseNews.results.forEach((item) => {
 
                 let sectionTitle = '';
+                // Clean up "US" so it doesn't show as U.S.:
                 (item.section === "U.S.") ? sectionTitle = 'US' : sectionTitle = item.section;
 
+                // If the image is in the article, use it. Otherwise, default to the NYT logo.
                 if (item.multimedia[1] == undefined){
                     url = "images/times.png";
                 } else {
@@ -469,13 +482,65 @@ function updateNewsData() {
 
                 let html = newsTemplateFn({id: item.short_url,title: item.title, art: url, 'key': item.title, section: sectionTitle, 'category': 'news'});
 
-                resultsArray.push(html);
+                // NOTE: I'm limiting us to 20 articles
+                if (urlCount <= 20) {resultsArray.push(html)}
+                urlCount++;
             })
 
             return resultsArray;
         });
     
 }
+
+    // let deezerURL = "https://api.deezer.com/chart/0/tracks?limit=20"; // The 0 means all genres, sub ids for different genre charts, the limit lets us request the number of tracks
+    
+    // THIS IS USING A TOP 50 PLAYLIST MAINTAINED BY DEEZER. The results seemed more mainstream.
+    // NOTE: Deezer doesn't provide genre info in these responses that I can see
+    function updateDeezerData() {
+
+        return get(`https://my-little-cors-proxy.herokuapp.com/https://api.deezer.com/playlist/2098157264?limit=30`)
+            .then(responseMusic => {
+    
+                console.log(responseMusic);
+
+                let resultsArray = [];
+                responseMusic.tracks.data.forEach((item) => {
+                    
+                    let musicSearch = encodeURIComponent(item.artist.name + ' ' + item.title);
+                    // Generate the HTML template
+                    let html = musicTemplateFn({'id': item.position, url:  `https://www.google.com/search?q=${musicSearch}+youtube&btnI`, 'artist': item.artist.name, 'track': item.title, 'album': item.album.title, 'art': item.album.cover_medium, 'key': item.artist.name, 'category': 'music'});
+                    
+                    resultsArray.push(html);
+                })
+    
+                return resultsArray;
+            });
+    }
+    // THIS IS THE ORIGINAL USING THE TOP CHARTS
+    // function updateDeezerData() {
+
+    //     return get(`https://my-little-cors-proxy.herokuapp.com/https://api.deezer.com/chart/0/tracks?limit=20`)
+    //         .then(responseMusic => {
+    
+    //             let resultsArray = [];
+    //             responseMusic.data.forEach((item) => {
+                    
+    //                 let musicSearch = encodeURIComponent(item.artist.name + ' ' + item.title);
+    //                 // Generate the HTML template
+    //                 let html = musicTemplateFn({'id': item.position, url:  `https://www.google.com/search?q=${musicSearch}+youtube&btnI`, 'artist': item.artist.name, 'track': item.title, 'album': item.album.title, 'art': item.album.cover_medium, 'key': item.artist.name, 'category': 'music'});
+                    
+    //                 resultsArray.push(html);
+    //             })
+    
+    //             return resultsArray;
+    //         });
+    // }
+
+
+
+
+
+
 
 // Generates the initial cards
 async function updateAllCards() {
@@ -634,24 +699,3 @@ const deezerGenres =
     "name": "Latin Music",
     }] 
 
-    // let deezerURL = "https://api.deezer.com/chart/0"; // The 0 means all genres, sub ids for different genre charts
-
-
-function updateDeezerData() {
-
-    return get(`https://my-little-cors-proxy.herokuapp.com/https://api.deezer.com/chart/0/tracks`)
-        .then(responseMusic => {
-
-            let resultsArray = [];
-            responseMusic.data.forEach((item) => {
-                
-                let musicSearch = encodeURIComponent(item.artist.name + ' ' + item.title);
-                // Generate the HTML template
-                let html = musicTemplateFn({'id': item.position, url:  `https://www.google.com/search?q=${musicSearch}+youtube&btnI`, 'artist': item.artist.name, 'track': item.title, 'album': item.album.title, 'art': item.album.cover_medium, 'key': item.artist.name, 'category': 'music'});
-                
-                resultsArray.push(html);
-            })
-
-            return resultsArray;
-        });
-}
