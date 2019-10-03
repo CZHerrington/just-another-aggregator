@@ -260,6 +260,21 @@ const bookCardTemplate = `
 // create a new template function with your html for books
 const bookTemplateFn = _.template(bookCardTemplate);
 
+//  template html
+const newsCardTemplate = `
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
+        <img class="album-art" src="<%= art %>">
+        <div class="song-info">
+            <h2><%= title %></h2>
+        </div>
+        <div class="upvoteDownvote">
+            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
+            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+        </div>
+    </div>`; 
+// create a new template function with your html for books
+const newsTemplateFn = _.template(newsCardTemplate);
+
 
 // GETTER FUNCTIONS
 //Returns an array of HTML templates of the trending music data
@@ -364,6 +379,30 @@ function updateNonfictionBookData() {
     
 }
 
+// Returns an array of HTML templates of top nonfiction books
+function updateNewsData() {
+    
+    return get(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=HfHxWUxYzqeXzAYx2V26or4nU9mOnw8n`)
+        .then(responseNews => {
+
+            let resultsArray = [];
+            let url;
+            responseNews.results.forEach((item) => {
+                if (item.multimedia[1] == undefined){
+                    url = "images/times.png";
+                } else {
+                    url = item.multimedia[1].url
+                }
+
+                let html = newsTemplateFn({id: item.short_url,title: item.title, art: url, 'key': item.title, 'category': 'news'});
+
+                resultsArray.push(html);
+            })
+
+            return resultsArray;
+        });
+    
+}
 
 // Generates the initial cards
 async function updateAllCards() {
@@ -376,8 +415,9 @@ async function updateAllCards() {
     let nfBookArray = await updateNonfictionBookData();
     let fBookArray = await updateFictionBookData();
     let dzMusicArray = await updateDeezerData();
+    let newsArray = await updateNewsData();
 
-    cardArray = cardArray.concat(await musicArray, await movieArray, await tvArray, await nfBookArray, await fBookArray, await dzMusicArray);
+    cardArray = cardArray.concat(await musicArray, await movieArray, await tvArray, await nfBookArray, await fBookArray, await dzMusicArray, await newsArray);
     // cardArray = cardArray.concat(await cardArray2);
 
     cardArray = _.shuffle(cardArray);
