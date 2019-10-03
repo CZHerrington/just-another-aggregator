@@ -63,6 +63,19 @@ const bookCardTemplate = `
         </div>
     </div>`; 
 
+//  template html
+const newsCardTemplate = `
+    <div data-index="<%= id %>" class="small-card music-card">
+        <img class="album-art" src="<%= art %>">
+        <div class="song-info">
+            <h2><%= title %></h2>
+        </div>
+        <div class="upvoteDownvote">
+            <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
+            <img class="voteButton" src="images/thumbs-down-silhouette.svg">
+        </div>
+    </div>`; 
+
 // create a new template function with your html for music
 const musicTemplateFn = _.template(musicCardTemplate);
 
@@ -71,6 +84,9 @@ const movieTemplateFn = _.template(movieCardTemplate);
 
 // create a new template function with your html for movies
 const bookTemplateFn = _.template(bookCardTemplate);
+
+// create a new template function with your html for movies
+const newsTemplateFn = _.template(newsCardTemplate);
 
 // call the music template function, passing it data. This returns compiled html
 function createMusicList(responseMusic) {
@@ -121,7 +137,7 @@ function createBooksList(responseBooks, genre) {
     bookArray4.forEach(
         (item) => {
             //let item = musicArray[musicArray.length - index - 1]
-            console.log("Title: ", item.title =  _.startCase(_.toLower(item.title)));
+            //console.log("Title: ", item.title =  _.startCase(_.toLower(item.title)));
             //console.log("Author: ", item.books.author);
             //console.log("NY Times Rank: ", item.books.rank);
             //console.log("data tag: ", item.books.primary_isbn10);
@@ -132,6 +148,31 @@ function createBooksList(responseBooks, genre) {
         //console.log(item.release_date);
         //console.log(item.id);
             let html = bookTemplateFn({id: item.primary_isbn10,rank: "NY Times Rank: " + item.rank, title: item.title, author: item.author, art: item.book_image});
+            main.append(html)
+        }
+    )
+}
+
+// call the books template function, passing it data. This returns compiled html
+function createNewsList(responseNews) {
+    let newsArray = responseNews.results;
+    let url;
+    console.log("test", newsArray);
+    //let newsArray4 = newsArray.splice(0,10);
+    //console.log(newsArray4);
+    newsArray.forEach(
+        (item) => {
+            //let item = musicArray[musicArray.length - index - 1]
+            console.log("Title: ", item.title);
+            //console.log("url: ", item.multimedia[1].url);
+            if (item.multimedia[1] == undefined){
+                url = "images/times.png";
+            } else {
+                url = item.multimedia[1].url
+            }
+             
+
+            let html = newsTemplateFn({id: item.short_url,title: item.title, art: url});
             main.append(html)
         }
     )
@@ -184,12 +225,24 @@ function updateNfBookData() {
     
 }
 
+//create a function to retrieve fiction books data
+function updateNewsData() {
+    
+    get(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=HfHxWUxYzqeXzAYx2V26or4nU9mOnw8n`)
+    .then(responseNews => {
+        createNewsList(responseNews);
+        console.log("response is ", responseNews);
+    });
+    
+}
+
+
 //trigger api calls for category data defaults
 updateTrendMusicData();
 updateMovieData();
 updateBookData();
 updateNfBookData();
-
+updateNewsData();
 
 
 
