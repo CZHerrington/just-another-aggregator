@@ -102,6 +102,65 @@ h3 {
 
 
 
+/* TEST LOADING ANIMATION */
+.loadingAnimation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    width: 30%;
+    height: 20%;
+    z-index: 20;
+    color: #eee;
+    /* background-color: rgba(240, 240, 240, 0.1); */
+    background: linear-gradient(45deg, #321574, #501B77);
+    font-size: 3rem;
+    text-shadow: 1px 1px 3px #000;
+    border: 8px solid #eee;
+    border-color: #eee;
+    border-radius: 400px;
+    box-shadow: 3px 3px 6px 0 rgba(20, 20, 20, 0.9) inset;
+    animation: loading-animation 2s ease infinite;
+}
+
+.loadingAnimation.hidden {
+    display: none;
+}
+
+@keyframes loading-animation {
+    0% {
+        
+    }
+    16.7% {
+        border-top-left-radius: 30px;
+    }
+    33.3% {
+        border-top-left-radius: 400px;
+        border-bottom-left-radius: 30px;
+    }
+    50% {
+        border-bottom-left-radius: 400px;
+        border-bottom-right-radius: 30px;
+    }
+    66.7% {
+        border-bottom-right-radius: 400px;
+        border-top-right-radius: 30px;
+    }
+    83.3% {
+        border-top-right-radius: 400px;
+    }
+    100% {
+
+    }
+}
+
+
+
+
 
 
 /* BACKGROUND GRADIENT */
@@ -289,9 +348,15 @@ main.hidden {
     border: 3px solid #ddd;
     margin: 1%;
     flex-grow: 1;
+    transition: 300ms ease all;
 }
 
 .small-card.hidden {
+    opacity: 0;
+    /* transform: scale(0.1); */
+}
+
+.small-card.removed {
     display: none;
 }
 
@@ -362,9 +427,10 @@ main.hidden {
 .signInRow {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
+    padding-right: 20px;
 }
 
 .settings-card .userSelect {
@@ -388,7 +454,7 @@ main.hidden {
     align-items: center;
     height: 45px;
     width: 130px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     border-radius: 100px;
     border: 3px solid #eee;
     color: #eee;
@@ -427,7 +493,9 @@ main.hidden {
     text-shadow: 1px 1px 3px #000;
     margin-left: 15px;
     padding-right: 50px;
-    /* max-width: 60%; */
+    max-width: 300px;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 
@@ -445,6 +513,7 @@ main.hidden {
 .voteButton {
     max-width: 30px;
     border-radius: 5px;
+    transition: 200ms ease all;
 }
 
 .voteButton:hover {
@@ -471,10 +540,6 @@ main.hidden {
         width: 90%;
     }
 
-    .signInRow {
-        justify-content: flex-start;
-    }
-
     .signInButton {
         width: 115px;
     }
@@ -499,12 +564,22 @@ main.hidden {
 
     .music-card .song-info {
         margin-left: 10px;
+        max-width: 190px;
     }
 
     .categoryToggle.genreToggle {
         height: 40px;
         margin-top: 3px;
         margin-bottom: 3px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .music-card .song-info {
+        max-width: 100%;
+    }
+    .newsTitle {
+        font-size: 1.1rem;
     }
 }
 
