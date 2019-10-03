@@ -11,6 +11,10 @@ html {
     box-sizing: inherit;
 }
 
+.userSelect>option {
+    background: rgba(0,0,0,0);
+
+}
 
 /* GLOBAL ELEMENT ADJUSTMENTS */
 
