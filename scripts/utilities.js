@@ -154,6 +154,7 @@ class User {
         if (this.prefs.data.preferences[category]['likes'].indexOf(value) === -1) {
             this.prefs.data.preferences[category]['likes'].push(value);
             this.persistPrefs()
+            this.deferredFilter()
         }
     }
 

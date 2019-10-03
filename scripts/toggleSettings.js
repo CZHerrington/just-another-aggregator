@@ -82,7 +82,7 @@ function addSignInEventListener() {
                 document.querySelector("#settings-card-overlay").classList.toggle("hidden");   
 
             } else {
-                console.log("selected other username");
+                console.log("selected username: " + user);
                 let username = usernameSelect.value;
                 user = new User(username);
                 // UPDATE THE PAGE FOR THE USER SELECTED
