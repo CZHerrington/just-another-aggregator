@@ -102,7 +102,7 @@ h3 {
 
 
 
-/* TEST LOADING ANIMATION */
+/* LOADING ANIMATION */
 .loadingAnimation {
     display: flex;
     flex-direction: row;
@@ -173,6 +173,10 @@ h3 {
     width: 100%;
     height: 100vh;
     background: linear-gradient(45deg, #0B1C43, #163169, #321574, #501B77, #0B1C43);
+    /*#0B1C43*/
+    /* background: linear-gradient(45deg, #631617, #040976, #481549, #8A1F20, #631617);  */
+    /* background: linear-gradient(45deg, #53251D, #83392E, #2d746e, #163A37); */
+    /* background: linear-gradient(45deg, #231C4D, #3A2E7E, #5c4540, #7E5F01, #4F3B01); */
     background-size: 350% 100%;
     animation: background-gradient 30s ease infinite alternate;
 }
@@ -507,6 +511,7 @@ main.hidden {
     margin-left: 15px;
     padding-right: 50px;
     max-width: 300px;
+    /* max-width: 25vw; */
     max-height: 100%;
     overflow: hidden;
 }
