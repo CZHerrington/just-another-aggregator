@@ -252,7 +252,9 @@ const musicCardTemplate = `
     <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
-            <h2><%= track %></h2>
+            <a href=<%= url %> target="_blank" class="titleLinks">
+                <h2><%= track %></h2>
+            </a>
             <h3><%= artist %></h3>
             <h3><i><%= album %></i></h3>
         </div>
@@ -267,10 +269,12 @@ const musicTemplateFn = _.template(musicCardTemplate);
 //  template html
 // NOTE: WHICH OF THESE data tags should have genre?
 const movieCardTemplate = `
-    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" data-url="<%= url %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
-            <h2><%= title %></h2>
+            <a href=<%= url %> target="_blank" class="titleLinks">
+                <h2><%= title %></h2>
+            </a>
             <h3>Rating: <%= rating %></h3>
             <h3><i><%= genre %> Movie</i></h3>
         </div>
@@ -304,7 +308,9 @@ const bookCardTemplate = `
     <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
         <img class="album-art" src="<%= art %>">
         <div class="song-info">
-            <h2><%= title %></h2>
+            <a href=<%= url %> target="_blank" class="titleLinks">
+                <h2><%= title %></h2>
+            </a>
             <h3><%= rank %></h3>
             <h3><i><%= author %></i></h3>
         </div>
@@ -364,8 +370,9 @@ function updateMovieData() {
             let resultsArray = [];
             responseMovies.results.forEach((item) => {
                 
+                let movieSearch = encodeURIComponent(item.title);
                 // Generate HTML template
-                let html = movieTemplateFn({id: item.id, title: item.title, genre: movieGenre[item.genre_ids[0]], rating: item.vote_average, art: "https://image.tmdb.org/t/p/w200" + item.poster_path, 'key': item.title, 'category': 'movies'});
+                let html = movieTemplateFn({id: item.id,url: `https://www.google.com/search?q=${movieSearch}+trailer+youtube&btnI`, title: item.title, genre: movieGenre[item.genre_ids[0]], rating: item.vote_average, art: "https://image.tmdb.org/t/p/w200" + item.poster_path, 'key': item.title, 'category': 'movies'});
                 
                 // item.vote_average will return the average rating of the show/movie
                 // item.release_date will return the release date
@@ -407,8 +414,9 @@ function updateFictionBookData() {
 
             let resultsArray = [];
             responseBooks.results.books.forEach((item) => {
-
-                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Fiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
+                
+                let bookSearch = encodeURIComponent(item.author + ' ' + _.startCase(_.toLower(item.title))); 
+                let html = bookTemplateFn({id: item.primary_isbn10,url: `https://www.google.com/search?q=${bookSearch}+goodreads&btnI`,rank: "NYT Fiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
 
                 resultsArray.push(html);
             })
@@ -427,7 +435,8 @@ function updateNonfictionBookData() {
             let resultsArray = [];
             responseBooks.results.books.forEach((item) => {
 
-                let html = bookTemplateFn({id: item.primary_isbn10,rank: "NYT Nonfiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
+                let bookSearch = encodeURIComponent(item.author + ' ' + _.startCase(_.toLower(item.title))); 
+                let html = bookTemplateFn({id: item.primary_isbn10,url: `https://www.google.com/search?q=${bookSearch}+goodreads&btnI`,rank: "NYT Nonfiction Rank: " + item.rank, title: _.startCase(_.toLower(item.title)), author: item.author, art: item.book_image, 'key': item.title, 'category': 'books'});
 
                 resultsArray.push(html);
             })
@@ -635,9 +644,10 @@ function updateDeezerData() {
 
             let resultsArray = [];
             responseMusic.data.forEach((item) => {
-
+                
+                let musicSearch = encodeURIComponent(item.artist.name + ' ' + item.title);
                 // Generate the HTML template
-                let html = musicTemplateFn({'id': item.position, 'artist': item.artist.name, 'track': item.title, 'album': item.album.title, 'art': item.album.cover_medium, 'key': item.artist.name, 'category': 'music'});
+                let html = musicTemplateFn({'id': item.position, url:  `https://www.google.com/search?q=${musicSearch}+youtube&btnI`, 'artist': item.artist.name, 'track': item.title, 'album': item.album.title, 'art': item.album.cover_medium, 'key': item.artist.name, 'category': 'music'});
                 
                 resultsArray.push(html);
             })
