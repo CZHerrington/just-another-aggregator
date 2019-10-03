@@ -59,8 +59,10 @@ class User {
                     if ((dislikes.indexOf(key) !== -1) || (defaultCategories.indexOf(category) === -1)) {
                         console.log('hiding ' + key + ' in category ' + category + '!')
                         child.classList.add('hidden')
+                        setTimeout(function() {child.classList.add('removed')}, 300)
                     } else {
                         child.classList.remove('hidden')
+                        setTimeout(function() {child.classList.remove('removed')}, 300)
                     }
                 } else {
                     console.warn('Someone forgot to set a category!')

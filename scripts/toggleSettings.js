@@ -109,12 +109,16 @@ function addSignInEventListener() {
 mainContent.addEventListener('click', function(e) {
     if (e.target.classList.contains('voteDown')) {
         e.target.parentElement.parentElement.classList.toggle('hidden');
+        setTimeout(function() {
+            e.target.parentElement.parentElement.classList.toggle('removed')
+        }, 300);
 
         if (user!== null) {
             let key = e.target.parentElement.parentElement.dataset.key;
             let category = e.target.parentElement.parentElement.dataset.category;
-            user.setDislike(category, key)
+            user.setDislike(category, key);
         }
+        // e.target.parentElement.parentElement.classList.toggle('removed');
     }
 });
 
@@ -277,31 +281,46 @@ const bookCardTemplate = `
 // create a new template function with your html for books
 const bookTemplateFn = _.template(bookCardTemplate);
 
+//  template html
+const newsCardTemplate = `
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
+        <img class="album-art" src="<%= art %>">
+        <div class="song-info">
+            <h2 class="newsTitle"><%= section %>: &nbsp;<%= title %></h2>
+        </div>
+        <div class="upvoteDownvote">
+            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
+            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+        </div>
+    </div>`; 
+// create a new template function with your html for books
+const newsTemplateFn = _.template(newsCardTemplate);
+
 
 // GETTER FUNCTIONS
 //Returns an array of HTML templates of the trending music data
-function updateTrendMusicData() {
+// function updateTrendMusicData() {
     
-    return get(`https://theaudiodb.com/api/v1/json/1/trending.php?country=us&type=itunes&format=singles&country=us&type=itunes&format=singles`)
-        .then(responseMusic => {
+//     return get(`https://theaudiodb.com/api/v1/json/1/trending.php?country=us&type=itunes&format=singles&country=us&type=itunes&format=singles`)
+//         .then(responseMusic => {
 
-            let resultsArray = [];
-            responseMusic.trending.forEach((item) => {
+//             let resultsArray = [];
+//             responseMusic.trending.forEach((item) => {
 
-                // Generate the HTML template
-                let html = musicTemplateFn({'id': item.intChartPlace, 'artist': item.strArtist, 'track': item.strTrack, 'album': item.strAlbum, 'art': item.strTrackThumb + "/preview", 'key': item.strArtist, 'category': 'music'});
+//                 // Generate the HTML template
+//                 let html = musicTemplateFn({'id': item.intChartPlace, 'artist': item.strArtist, 'track': item.strTrack, 'album': item.strAlbum, 'art': item.strTrackThumb + "/preview", 'key': item.strArtist, 'category': 'music'});
                 
-                resultsArray.push(html);
-            })
+//                 resultsArray.push(html);
+//             })
 
-            return resultsArray;
-        });
-}
+//             return resultsArray;
+//         });
+// }
 
 // Returns an array of HTML templates of the top movies
 function updateMovieData() {
 
-    return get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${moviesAPIKey}`)
+    return get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${moviesAPIKey}`)
         .then(responseMovies => {
 
             let resultsArray = [];
@@ -323,7 +342,7 @@ function updateMovieData() {
 
 function updateTVData() {
 
-    return get(`https://api.themoviedb.org/3/trending/tv/day?api_key=${moviesAPIKey}`)
+    return get(`https://api.themoviedb.org/3/trending/tv/week?api_key=${moviesAPIKey}`)
         .then(responseTV => {
 
             let resultsArray = [];
@@ -380,25 +399,59 @@ function updateNonfictionBookData() {
     
 }
 
+// Returns an array of HTML templates of top nonfiction books
+function updateNewsData() {
+    
+    return get(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=HfHxWUxYzqeXzAYx2V26or4nU9mOnw8n`)
+        .then(responseNews => {
+        
+            console.log(responseNews);
+
+            let resultsArray = [];
+            let url;
+            responseNews.results.forEach((item) => {
+
+                let sectionTitle = '';
+                (item.section === "U.S.") ? sectionTitle = 'US' : sectionTitle = item.section;
+
+                if (item.multimedia[1] == undefined){
+                    url = "images/times.png";
+                } else {
+                    url = item.multimedia[1].url
+                }
+
+                let html = newsTemplateFn({id: item.short_url,title: item.title, art: url, 'key': item.title, section: sectionTitle, 'category': 'news'});
+
+                resultsArray.push(html);
+            })
+
+            return resultsArray;
+        });
+    
+}
 
 // Generates the initial cards
 async function updateAllCards() {
 
     let cardArray = [];
 
-    let musicArray = await updateTrendMusicData();
+    // let musicArray = await updateTrendMusicData();
     let movieArray = await updateMovieData();
     let tvArray = await updateTVData();
     let nfBookArray = await updateNonfictionBookData();
     let fBookArray = await updateFictionBookData();
     let dzMusicArray = await updateDeezerData();
+    let newsArray = await updateNewsData();
 
-    cardArray = cardArray.concat(await musicArray, await movieArray, await tvArray, await nfBookArray, await fBookArray, await dzMusicArray);
-    // cardArray = cardArray.concat(await cardArray2);
+    cardArray = cardArray.concat(await movieArray, await tvArray, await nfBookArray, await fBookArray, await dzMusicArray, await newsArray);
 
+    /// Hides the loading animation
+    document.querySelector('#loadingAnimation').classList.toggle('hidden');
+
+    // Randomizes the cards display order
     cardArray = _.shuffle(cardArray);
 
-
+    // Appends them in the DOM
     cardArray.forEach((card) => {
         mainContent.innerHTML += card;
         // console.log(card);
@@ -412,6 +465,7 @@ async function updateAllCards() {
 };
 
 updateAllCards();
+
 
 
 
@@ -540,8 +594,6 @@ function updateDeezerData() {
 
     return get(`https://my-little-cors-proxy.herokuapp.com/https://api.deezer.com/chart/0/tracks`)
         .then(responseMusic => {
-
-            console.log(responseMusic);
 
             let resultsArray = [];
             responseMusic.data.forEach((item) => {
