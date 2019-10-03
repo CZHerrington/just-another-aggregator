@@ -118,6 +118,8 @@ class User {
                 } else {
                     el.classList.remove('activated');
                 } 
+                // Toggle the category's settings pane visibility
+                checkSettingsRowVisibility(el);
             }
         })
     }
