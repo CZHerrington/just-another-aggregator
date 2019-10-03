@@ -10,21 +10,21 @@ const settingsOverlay = document.querySelector("#settingsOverlay");
 const mainContent = document.querySelector("#mainContent");
 const header = document.querySelector("#header");
 
-// const settingsCardDefault = document.querySelector("#settings-card-default");
-// const settingsCardOverlay = document.querySelector("#settings-card-overlay");
-
 const categoryToggleRow = document.querySelector('#categoryToggleRow');
 const musicToggleRow = document.querySelector('#musicToggleRow');
 const movieToggleRow = document.querySelector('#movieToggleRow');
 const tvToggleRow = document.querySelector('#tvToggleRow');
 const bookToggleRow = document.querySelector('#bookToggleRow');
 const newsToggleRow = document.querySelector('#newsToggleRow');
+const gamingToggleRow = document.querySelector('#gamingToggleRow');
 
 // Toggles the settings panel
 expandCollapse.addEventListener('click', function(e) {
+
     expandCollapse.classList.toggle('activated');
     settingsOverlay.classList.toggle('activated');
     mainContent.classList.toggle('hidden');
+
     // filters categories if user is logged in
     if (!settingsOverlay.classList.contains('activated') && user !== null) {
         user.deferredFilter();
@@ -95,8 +95,7 @@ function checkSettingsRowVisibility(target) {
 }
 
 
-
-
+// Toggles the category buttons
 musicToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
 });
@@ -112,6 +111,9 @@ bookToggleRow.addEventListener('click', function(e) {
 newsToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
 });
+gamingToggleRow.addEventListener('click', function(e) {
+    e.target.classList.toggle('activated');
+});
 
 // Sign In Buttons (appending the items removes my
 //   signInCard assignemnt, so adding the listener afterwards)
@@ -124,16 +126,17 @@ function addSignInEventListener() {
 
         if (e.target.id === 'signInButton') {
             console.log(e);
+            // If new user, flip to the new user overlay
             if (usernameSelect.value === "New User") {
 
                 document.querySelector("#settings-card-default").classList.toggle("hidden");
                 document.querySelector("#settings-card-overlay").classList.toggle("hidden");   
 
-            } else {
+            } else {  // Else update the name and load the user profile
                 console.log("selected other username");
                 let username = usernameSelect.value;
                 user = new User(username);
-                // UPDATE THE PAGE FOR THE USER SELECTED
+                // Update the page for the selected user
                 document.querySelector("#welcomeHeader").textContent = `Welcome, ${username}`;
             }
         }
@@ -164,12 +167,16 @@ function addSignInEventListener() {
 
 // Dislike button
 mainContent.addEventListener('click', function(e) {
+    // If the dislike butotn was pressed...
     if (e.target.classList.contains('voteDown')) {
+        // flip to 0 opacity for 300ms to let the transition animation play
         e.target.parentElement.parentElement.classList.toggle('hidden');
         setTimeout(function() {
+            // then remove the card from the page flow
             e.target.parentElement.parentElement.classList.toggle('removed')
         }, 300);
 
+        // If signed in, store the user's dislike for that item
         if (user!== null) {
             let key = e.target.parentElement.parentElement.dataset.key;
             let category = e.target.parentElement.parentElement.dataset.category;
@@ -179,10 +186,11 @@ mainContent.addEventListener('click', function(e) {
     }
 });
 
-// SCROLL HANDLER
+// Darkens the header on scroll
 document.addEventListener('wheel', (e) => {
     let classes = header.classList;
     let windowScroll = window.scrollY;
+
     if (windowScroll > 40 && !classes.contains('scrolled')){
         header.classList.add('scrolled');
     }
@@ -205,8 +213,7 @@ document.addEventListener('wheel', (e) => {
 // * * * * API SECTION * * *
 // * * * * * * * * * * * * *
 
-
-const moviesAPIKey = "8895918e5c66d703e2331fdd92606203";
+// Lists used to match the top movie/show with its genre
 const movieGenre = {
     28: 'Action',
     12: 'Adventure',
@@ -341,6 +348,23 @@ const newsCardTemplate = `
 // create a new template function with your html for books
 const newsTemplateFn = _.template(newsCardTemplate);
 
+//  template html
+const gamingCardTemplate = `
+    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" class="small-card music-card">
+        <img class="album-art" src="<%= art %>">
+        <div class="song-info">
+            <a href="<%= url %>" target="_blank" class="titleLinks">
+                <h2 class="newsTitle"><%= publisher %>: &nbsp;<%= title %></h2>
+            </a>
+        </div>
+        <div class="upvoteDownvote">
+            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
+            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+        </div>
+    </div>`; 
+// create a new template function with your html for books
+const gamingTemplateFn = _.template(gamingCardTemplate); 
+
 
 {// GETTER FUNCTIONS
 //Returns an array of HTML templates of the trending music data
@@ -366,7 +390,7 @@ const newsTemplateFn = _.template(newsCardTemplate);
 // Returns an array of HTML templates of the top movies
 function updateMovieData() {
 
-    return get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${moviesAPIKey}`)
+    return get(`https://api.themoviedb.org/3/trending/movie/week?api_key=8895918e5c66d703e2331fdd92606203`)
         .then(responseMovies => {
 
             let resultsArray = [];
@@ -387,9 +411,10 @@ function updateMovieData() {
         });
 }
 
+// Returns an array of HTML templates of the top tv shows
 function updateTVData() {
 
-    return get(`https://api.themoviedb.org/3/trending/tv/week?api_key=${moviesAPIKey}`)
+    return get(`https://api.themoviedb.org/3/trending/tv/week?api_key=8895918e5c66d703e2331fdd92606203`)
         .then(responseTV => {
 
             let resultsArray = [];
@@ -492,53 +517,51 @@ function updateNewsData() {
     
 }
 
-    // let deezerURL = "https://api.deezer.com/chart/0/tracks?limit=20"; // The 0 means all genres, sub ids for different genre charts, the limit lets us request the number of tracks
+// Returns an array of HTML templates of top songs
+function updateDeezerData() {
+
+    return get(`https://my-little-cors-proxy.herokuapp.com/https://api.deezer.com/playlist/2098157264?limit=30`)
+        .then(responseMusic => {
+
+            console.log(responseMusic);
+
+            let resultsArray = [];
+            responseMusic.tracks.data.forEach((item) => {
+                
+                let musicSearch = encodeURIComponent(item.artist.name + ' ' + item.title);
+                // Generate the HTML template
+                let html = musicTemplateFn({'id': item.position, url:  `https://www.google.com/search?q=${musicSearch}+youtube&btnI`, 'artist': item.artist.name, 'track': item.title, 'album': item.album.title, 'art': item.album.cover_medium, 'key': item.artist.name, 'category': 'music'});
+                
+                resultsArray.push(html);
+            })
+
+            return resultsArray;
+        });
+}
     
-    // THIS IS USING A TOP 50 PLAYLIST MAINTAINED BY DEEZER. The results seemed more mainstream.
-    // NOTE: Deezer doesn't provide genre info in these responses that I can see
-    function updateDeezerData() {
+// Returns an array of HTML templates of top songs
+function updateGamingData() {
 
-        return get(`https://my-little-cors-proxy.herokuapp.com/https://api.deezer.com/playlist/2098157264?limit=30`)
-            .then(responseMusic => {
-    
-                console.log(responseMusic);
+    return get(`https://newsapi.org/v2/top-headlines?apiKey=335ef27328fb481aa97916cb3c338206&pageSize=20&sources=ign,polygon`)
+        .then(responseGames => {
 
-                let resultsArray = [];
-                responseMusic.tracks.data.forEach((item) => {
-                    
-                    let musicSearch = encodeURIComponent(item.artist.name + ' ' + item.title);
-                    // Generate the HTML template
-                    let html = musicTemplateFn({'id': item.position, url:  `https://www.google.com/search?q=${musicSearch}+youtube&btnI`, 'artist': item.artist.name, 'track': item.title, 'album': item.album.title, 'art': item.album.cover_medium, 'key': item.artist.name, 'category': 'music'});
-                    
-                    resultsArray.push(html);
-                })
-    
-                return resultsArray;
-            });
-    }
-    // THIS IS THE ORIGINAL USING THE TOP CHARTS
-    // function updateDeezerData() {
+            console.log(responseGames);
+            
 
-    //     return get(`https://my-little-cors-proxy.herokuapp.com/https://api.deezer.com/chart/0/tracks?limit=20`)
-    //         .then(responseMusic => {
-    
-    //             let resultsArray = [];
-    //             responseMusic.data.forEach((item) => {
-                    
-    //                 let musicSearch = encodeURIComponent(item.artist.name + ' ' + item.title);
-    //                 // Generate the HTML template
-    //                 let html = musicTemplateFn({'id': item.position, url:  `https://www.google.com/search?q=${musicSearch}+youtube&btnI`, 'artist': item.artist.name, 'track': item.title, 'album': item.album.title, 'art': item.album.cover_medium, 'key': item.artist.name, 'category': 'music'});
-                    
-    //                 resultsArray.push(html);
-    //             })
-    
-    //             return resultsArray;
-    //         });
-    // }
+            let resultsArray = [];
+            responseGames.articles.forEach((item) => {
 
+                console.log(item.source.name);
 
+                // Generate the HTML template
+                let html = gamingTemplateFn({'id': item.source.id, 'url':  item.url, 'publisher': item.source.name, 'title': item.title, 'art': item.urlToImage, 'key': item.title, 'category': 'gaming'});
+                
+                resultsArray.push(html);
+            })
 
-
+            return resultsArray;
+        });
+}
 
 
 
@@ -554,8 +577,9 @@ async function updateAllCards() {
     let fBookArray = await updateFictionBookData();
     let dzMusicArray = await updateDeezerData();
     let newsArray = await updateNewsData();
+    let gamingArray = await updateGamingData();
 
-    cardArray = cardArray.concat(await movieArray, await tvArray, await nfBookArray, await fBookArray, await dzMusicArray, await newsArray);
+    cardArray = cardArray.concat(await movieArray, await tvArray, await nfBookArray, await fBookArray, await dzMusicArray, await newsArray, await gamingArray);
 
     /// Hides the loading animation
     document.querySelector('#loadingAnimation').classList.toggle('hidden');
@@ -581,121 +605,6 @@ updateAllCards();
 
 
 
-// TEST DEEZER API - I believe this is better. Can make separate genre calls. No key needed. 50 calls / 5 seconds.
-// https://developers.deezer.com/api/explorer?url=chart
 
-// This maps all the genres to their IDs
-const deezerGenres = 
-    [{
-    "id": "0",
-    "name": "All",
-    },
-    {
-    "id": "132",
-    "name": "Pop",
-    },
-    {
-    "id": "116",
-    "name": "Rap/Hip Hop",
-    },
-    {
-    "id": "122",
-    "name": "Reggaeton",
-    },
-    {
-    "id": "152",
-    "name": "Rock",
-    },
-    {
-    "id": "113",
-    "name": "Dance",
-    },
-    {
-    "id": "165",
-    "name": "R&B",
-    },
-    {
-    "id": "85",
-    "name": "Alternative",
-    },
-    {
-    "id": "186",
-    "name": "Christian",
-    },
-    {
-    "id": "106",
-    "name": "Electro",
-    },
-    {
-    "id": "466",
-    "name": "Folk",
-    },
-    {
-    "id": "144",
-    "name": "Reggae",
-    },
-    {
-    "id": "129",
-    "name": "Jazz",
-    },
-    {
-    "id": "84",
-    "name": "Country",
-    },
-    {
-    "id": "67",
-    "name": "Salsa",
-    },
-    {
-    "id": "65",
-    "name": "Traditional Mexicano",
-    },
-    {
-    "id": "98",
-    "name": "Classical",
-    },
-    {
-    "id": "173",
-    "name": "Films/Games",
-    },
-    {
-    "id": "464",
-    "name": "Metal",
-    },
-    {
-    "id": "169",
-    "name": "Soul & Funk",
-    },
-    {
-    "id": "2",
-    "name": "African Music",
-    },
-    {
-    "id": "16",
-    "name": "Asian Music",
-    },
-    {
-    "id": "153",
-    "name": "Blues",
-    },
-    {
-    "id": "75",
-    "name": "Brazilian Music",
-    },
-    {
-    "id": "71",
-    "name": "Cumbia",
-    },
-    {
-    "id": "81",
-    "name": "Indian Music",
-    },
-    {
-    "id": "95",
-    "name": "Kids",
-    },
-    {
-    "id": "197",
-    "name": "Latin Music",
-    }] 
+
 
