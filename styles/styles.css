@@ -58,6 +58,11 @@ h3 {
     right: 0;
     z-index: 10;
     overflow: hidden;
+    transition: 1s ease all;
+}
+
+.header.scrolled {
+    background: linear-gradient(rgba(20, 8, 45, 0.85), rgba(15, 6, 30, 0.85));
 }
 
 .headerNav {
@@ -427,8 +432,6 @@ main.hidden {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    /* align-items: center; */
-    /* position: fixed; */
     position: absolute;
     right: 10px;
     height: 100%;
@@ -456,16 +459,48 @@ main.hidden {
 }
 
 @media only screen and (max-width: 768px) {
+    html {
+        font-size: 12px;
+    }
+
+    .headerNav {
+        width: 90%;
+    }
+
+    .signInRow {
+        justify-content: flex-start;
+    }
+
+    .signInButton {
+        width: 115px;
+    }
+
     .small-card {
         max-width: 100%;
+        margin-top: 2%;
+        margin-bottom: 2%;
     }
 
     .upvoteDownvote {
-        right: 30px;
+        padding-right: 0;
     }
 
     .voteButton {
-        max-width: 50px;
+        max-width: 40px;
+    }
+
+    .music-card .album-art {
+        margin-left: 10px;
+    }
+
+    .music-card .song-info {
+        margin-left: 10px;
+    }
+
+    .categoryToggle.genreToggle {
+        height: 40px;
+        margin-top: 3px;
+        margin-bottom: 3px;
     }
 }
 
