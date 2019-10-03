@@ -39,7 +39,10 @@ expandCollapse.addEventListener('click', function(e) {
 
 // In the settings pane, toggles the categories and genres
 categoryToggleRow.addEventListener('click', function(e) {
+    // Toggles the button's activated state
     e.target.classList.toggle('activated');
+
+    // Parses the category and updates preferences
     let category = e.target.id.split('Toggle')[0];
     if (user !== null &&
         category !== 'category') {
@@ -48,7 +51,52 @@ categoryToggleRow.addEventListener('click', function(e) {
     if (user === null) {
         baseCategories[category] = ! baseCategories[category]
     }
+
+    // Hides/shows the appropriate settings rows
+    checkSettingsRowVisibility(e.target);
+
 });
+
+// Hides/shows the appropriate settings rows
+function checkSettingsRowVisibility(target) {
+    
+    // Ensures it wasn't just the row that was clicked
+    if (target.classList.contains('categoryToggleRow')) {return};
+    
+    let category = target.id.split('Toggle')[0];
+
+    // Toggles the row visibility if needed
+    if ((target.classList.contains('activated'))) {
+        ensureSettingsRowVisible("#" + category + "ToggleHr");
+        ensureSettingsRowVisible("#" + category + "ToggleWrapper");
+    } else {
+        ensureSettingsRowHidden("#" + category + "ToggleHr");
+        ensureSettingsRowHidden("#" + category + "ToggleWrapper");
+    }
+
+    // Adds hidden if absent
+    function ensureSettingsRowHidden(elementID) {
+        let target = document.querySelector(elementID);
+    
+        if (!target.classList.contains('hidden')) {
+            target.classList.add('hidden');
+        }
+    }
+    
+    // Removes hidden if present
+    function ensureSettingsRowVisible(elementID) {
+        let target = document.querySelector(elementID);
+    
+        if (target.classList.contains('hidden')) {
+            target.classList.remove('hidden');
+        }
+    }
+
+}
+
+
+
+
 musicToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
 });
@@ -131,8 +179,6 @@ mainContent.addEventListener('click', function(e) {
     }
 });
 
-
-
 // SCROLL HANDLER
 document.addEventListener('wheel', (e) => {
     let classes = header.classList;
@@ -160,26 +206,6 @@ document.addEventListener('wheel', (e) => {
 // * * * * * * * * * * * * *
 
 
-
-/* Api class use example: */
-
-// const user = User(username);
-// user.deferredFilter(mainContent);
-
-/* using setTimeout() to simulate delay */
-// setTimeout(
-//     ()=> {
-//         api.setDislike('movies', '50 first dates')
-//         api.setLike('music', 'basically everything')
-//         api.toggleDefaultCategory('movies')
-
-//         const musicPrefs = api.getPreferences('music')
-//         const defaultCategories = api.getDefaultCategories()
-//     }, 4000
-// )
-
-//jquery to select the element on the DOM
-// const mainContent = $('main'); NOTE: Redundant, done above
 const moviesAPIKey = "8895918e5c66d703e2331fdd92606203";
 const movieGenre = {
     28: 'Action',
