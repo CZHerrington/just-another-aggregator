@@ -267,6 +267,7 @@ main.hidden {
     color: #eee;
     text-shadow: 1px 1px 3px #000;
     box-shadow: 3px 3px 6px 0 rgba(20, 20, 20, 0.9) inset;
+    user-select: none;
 }
 
 .categoryToggle.activated {
@@ -284,6 +285,7 @@ main.hidden {
 .settingsHr {
     width: 80%;
     margin: 25px auto;
+    transition: 200ms ease all;
 }
 
 .genreToggleWrapper {
@@ -308,6 +310,7 @@ main.hidden {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    transition: 200ms ease all;
 }
 
 .categoryTitleLeft {
@@ -331,6 +334,16 @@ main.hidden {
     transform-origin: 50% 50%;
     margin-right: 2%;
 }
+
+.genreFilterRow.hidden {
+    display: none;
+}
+
+.settingsHr.hidden {
+    display: none;
+}
+
+
 
 
 
@@ -496,6 +509,15 @@ main.hidden {
     max-width: 300px;
     max-height: 100%;
     overflow: hidden;
+}
+
+.titleLinks {
+    text-decoration: none;
+    color: #ddd;
+}
+
+.titleLinks:hover {
+    color: #fff;
 }
 
 
