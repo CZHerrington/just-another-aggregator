@@ -35,11 +35,12 @@ const apiUrlCreator = (id) => `${apiUrl}${id}/latest?nocache=${Math.random()}`; 
 const apiUrlCreatorCache = (id) => `${apiUrl}${id}`;
 const apiUrlIndex = `${apiUrl}${indexId}`;
 
-class Api {
+class User {
     constructor(name) {
         this.binIdMap = {};
         this.name = name;
         this.prefs = emptyPrefs;
+        this.isLoggedIn = false;
 
         get(apiUrlCreator(indexId))
             .then((json) => {this.binIdMap = json})
@@ -49,15 +50,19 @@ class Api {
     deferredFilter() {
         mainContent.childNodes.forEach((child) => {
             if (child.nodeName === "DIV") {
-                console.log('found content div')
                 if (child.dataset.category !== undefined) {
                     let key = child.dataset.key
                     let category = child.dataset.category
                     let dislikes = this.getPreferences(category)['dislikes'];
-                    console.log(dislikes)
-                    if (dislikes.indexOf(key) !== -1) {
+                    let defaultCategories = this.getDefaultCategories();
+
+                    if ((dislikes.indexOf(key) !== -1) || (defaultCategories.indexOf(category) === -1)) {
                         console.log('hiding ' + key + ' in category ' + category + '!')
                         child.classList.add('hidden')
+                        setTimeout(function() {child.classList.add('removed')}, 300)
+                    } else {
+                        child.classList.remove('hidden')
+                        setTimeout(function() {child.classList.remove('removed')}, 300)
                     }
                 } else {
                     console.warn('Someone forgot to set a category!')
@@ -78,18 +83,35 @@ class Api {
             sendRequest(apiUrlCreator(id), 'GET')
                 .then((json) => {this.prefs = json})
                 .then(() => {this.deferredFilter()})
+                .then(() => {this._setUICategories()})
+            this.isLoggedIn = true;
+            console.log(this.name + ' logged in / preferences retrieved')
         }
+    }
+
+    _setUICategories() {
+        document.querySelector('#categoryToggleRow').childNodes.forEach((el) => {
+            if (el.nodeName === "DIV" && !!el.id) {
+                console.log(el.id)
+                let category = el.id.split('Toggle')[0];
+                if (this.prefs.data.defaultCategories.indexOf(category) !== -1) {
+                    el.classList.add('activated')
+                } else {
+                    el.classList.remove('activated');
+                } 
+            }
+        })
     }
 
     _addName(name) {
         //  create new id and prefs for user
         this.prefs.name = name;
-        this.name = name;  // NOTE FROM JOSH: what does this line do? Isn't this set in the constructor?
         sendRequest(apiUrl, "POST", this.prefs)
             .then((json) => {
                 this.binIdMap[name] = json.id;
                 sendRequest(apiUrlIndex, "PUT", this.binIdMap)
-                this.persistPrefs()
+                this.persistPrefs();
+                this.isLoggedIn = true;
             })
     }
     persistPrefs() {
@@ -102,7 +124,6 @@ class Api {
     }
 
     getPreferences(category) {
-        console.log('getting ' + category, this.prefs.data.preferences)
         return _.get(this.prefs.data.preferences, category);
     }
 
@@ -118,18 +139,26 @@ class Api {
     }
 
     setDislike(category, value) {
+        // chec if category exists
+        console.log(category + ' ' + value, this.prefs.data.preferences[category]['dislikes'])
         if (this.prefs.data.preferences[category]['dislikes'].indexOf(value) === -1) {
             this.prefs.data.preferences[category]['dislikes'].push(value);
             this.persistPrefs()
+            this.deferredFilter()
         }
     }
 
     toggleDefaultCategory(category) {
+        console.log(`toggleDefaultCategory(${category})`);
         let index = this.prefs.data.defaultCategories.indexOf(category);
         if (index === -1) {
             this.prefs.data.defaultCategories.push(category);
+            console.log('enabling category')
+            this.persistPrefs()
         } else {
             this.prefs.data.defaultCategories.splice(index, 1);
+            console.log('disabling category')
+            this.persistPrefs()
         }
     }
 }

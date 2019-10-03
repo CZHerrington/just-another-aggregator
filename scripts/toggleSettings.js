@@ -3,7 +3,7 @@
 // * * * * * * * * * * * * * * * *
 // * * * DOM EVENT LISTENERS * * *
 // * * * * * * * * * * * * * * * *
-
+let user = null;
 const expandCollapse = document.querySelector("#expandCollapse");
 const settingsOverlay = document.querySelector("#settingsOverlay");
 const mainContent = document.querySelector("#mainContent");
@@ -24,6 +24,10 @@ expandCollapse.addEventListener('click', function(e) {
     expandCollapse.classList.toggle('activated');
     settingsOverlay.classList.toggle('activated');
     mainContent.classList.toggle('hidden');
+
+    if (!settingsOverlay.classList.contains('activated') && user !== null) {
+        user.deferredFilter();
+    }
     // Scrolls back to the top of the page
     window.scrollTo({top: 0, behavior: 'smooth'});
 });
@@ -31,6 +35,11 @@ expandCollapse.addEventListener('click', function(e) {
 // In the settings pane, toggles the categories and genres
 categoryToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
+    let category = e.target.id.split('Toggle')[0];
+    if (user !== null &&
+        category !== 'category') {
+        user.toggleDefaultCategory(category);
+    }
 });
 musicToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
@@ -67,7 +76,7 @@ function addSignInEventListener() {
             } else {
                 console.log("selected other username");
                 let username = usernameSelect.value;
-
+                user = new User(username);
                 // UPDATE THE PAGE FOR THE USER SELECTED
                 document.querySelector("#welcomeHeader").textContent = `Welcome, ${username}`;
             }
@@ -79,6 +88,7 @@ function addSignInEventListener() {
 
             // Clears the input field
             let username = document.querySelector("#userNameInputField").value
+            user = new User(username);
             document.querySelector("#userNameInputField").value = '';
 
             // Flips back to the other screen
@@ -102,6 +112,12 @@ mainContent.addEventListener('click', function(e) {
         setTimeout(function() {
             e.target.parentElement.parentElement.classList.toggle('removed')
         }, 300);
+
+        if (user!== null) {
+            let key = e.target.parentElement.parentElement.dataset.key;
+            let category = e.target.parentElement.parentElement.dataset.category;
+            user.setDislike(category, key);
+        }
         // e.target.parentElement.parentElement.classList.toggle('removed');
     }
 });
@@ -137,8 +153,9 @@ document.addEventListener('wheel', (e) => {
 
 
 /* Api class use example: */
-// const user = new Api('Zachary')
-// api.deferredFilter(mainContent);
+
+// const user = User(username);
+// user.deferredFilter(mainContent);
 
 /* using setTimeout() to simulate delay */
 // setTimeout(
@@ -330,9 +347,8 @@ function updateTVData() {
 
             let resultsArray = [];
             responseTV.results.forEach((item) => {
-                
                 // Generate HTML template
-                let html = tvTemplateFn({id: item.id, title: item.name, genre: tvGenre[item.genre_ids[0]], rating: item.vote_average, art: "https://image.tmdb.org/t/p/w200" + item.poster_path, 'key': item.title, 'category': 'tv'});
+                let html = tvTemplateFn({id: item.id, title: item.name, genre: tvGenre[item.genre_ids[0]], rating: item.vote_average, art: "https://image.tmdb.org/t/p/w200" + item.poster_path, 'key': item.name, 'category': 'tv'});
                 
                 // item.vote_average will return the average rating of the show/movie
                 // item.first_air_date will return the average rating of the show/movie
