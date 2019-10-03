@@ -15,6 +15,25 @@ const filterContentByKeyValue = (key, filteredArray, valueArray) => filteredArra
     return (valueArray.indexOf(value) === -1);
 });
 
+function baseDeferredFilter(baseCategories) {
+    console.log(baseCategories)
+    mainContent.childNodes.forEach((child) => {
+        if (child.nodeName === "DIV") {
+            if (child.dataset.category !== undefined) {
+                let category = child.dataset.category;
+
+                if (!baseCategories[category]) {
+                    child.classList.add('hidden')
+                    setTimeout(function() {child.classList.add('removed')}, 300)
+                } else {
+                    child.classList.remove('hidden')
+                    setTimeout(function() {child.classList.remove('removed')}, 300)
+                }
+            }
+        }
+    })
+}
+
 function sendRequest(url, method, body = undefined) {
     const options = {
         method: method,
