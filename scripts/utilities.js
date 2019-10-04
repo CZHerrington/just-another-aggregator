@@ -122,6 +122,16 @@ class User {
                 checkSettingsRowVisibility(el);
             }
         })
+        document.querySelectorAll('.genreToggleWrapper').forEach((el) => {
+            console.log('========category - ' + el.id + '========')
+            el.childNodes.forEach((button) => {
+                if (button.nodeName === "DIV") {
+                    let subcategory = button.id.split(el.id)[1];
+                    console.log('subcategory: ' + subcategory)
+                }
+            })
+        })
+        
     }
 
     _addName(name) {
