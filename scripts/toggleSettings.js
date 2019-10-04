@@ -360,26 +360,7 @@ const gamingCardTemplate = `
 const gamingTemplateFn = _.template(gamingCardTemplate); 
 
 
-{// GETTER FUNCTIONS
-//Returns an array of HTML templates of the trending music data
-// function updateTrendMusicData() {
-    
-//     return get(`https://theaudiodb.com/api/v1/json/1/trending.php?country=us&type=itunes&format=singles&country=us&type=itunes&format=singles`)
-//         .then(responseMusic => {
-
-//             let resultsArray = [];
-//             responseMusic.trending.forEach((item) => {
-
-//                 // Generate the HTML template
-//                 let html = musicTemplateFn({'id': item.intChartPlace, 'artist': item.strArtist, 'track': item.strTrack, 'album': item.strAlbum, 'art': item.strTrackThumb + "/preview", 'key': item.strArtist, 'category': 'music'});
-                
-//                 resultsArray.push(html);
-//             })
-
-//             return resultsArray;
-//         });
-// }
-}
+// GETTER FUNCTIONS
 
 // Returns an array of HTML templates of the top movies
 function updateMovieData() {
