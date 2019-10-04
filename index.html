@@ -37,26 +37,11 @@
                 <div class="categoryToggle activated" id="newsToggle">News</div>
                 <div class="categoryToggle activated" id="gamingToggle">Games</div>
             </div>
-            <hr class="settingsHr" id="musicToggleHr">
-            <div class="genreFilterRow" id="musicToggleWrapper">
-                <!-- MUSIC -->
-                <span class="categoryTitleLeft">Music</span>
-                <div class="genreToggleWrapper" id="musicToggleRow">
-                    <div class="categoryToggle genreToggle" id="musicToggleRowPop">Pop</div>
-                    <div class="categoryToggle genreToggle activated" id="musicToggleRowRock">Rock</div>
-                    <div class="categoryToggle genreToggle" id="musicToggleRowAlt">Alt</div>
-                    <div class="categoryToggle genreToggle" id="musicToggleRowEDM">EDM</div>
-                    <div class="categoryToggle genreToggle" id="musicToggleRowKids">Kids</div>
-                    <div class="categoryToggle genreToggle" id="musicToggleRowJazz">Jazz</div>
-                    <div class="categoryToggle genreToggle" id="musicToggleRowGospel">Gospel</div>
-                    <div class="categoryToggle genreToggle" id="musicToggleRowSoundtrack">Soundtrack</div>
-                    <div class="categoryToggle genreToggle activated" id="musicToggleRowClassical">Classical</div>
-                </div>
-            </div>
+
             <hr class="settingsHr" id="moviesToggleHr">
             <div class="genreFilterRow" id="moviesToggleWrapper">
                 <!-- MOVIES -->
-                <span class="categoryTitleRight">Movies</span>
+                <span class="categoryTitleLeft">Movies</span>
                 <div class="genreToggleWrapper" id="movieToggleRow">
                     <div class="categoryToggle genreToggle" id="movieToggleRowAction">Action</div>
                     <div class="categoryToggle genreToggle" id="movieToggleRowAdventure">Adventure</div>
@@ -79,10 +64,11 @@
                     <div class="categoryToggle genreToggle" id="movieToggleRowWestern">Western</div>
                 </div>
             </div>
+
             <hr class="settingsHr" id="tvToggleHr">
             <div class="genreFilterRow" id="tvToggleWrapper">
                 <!-- TV -->
-                <span class="categoryTitleLeft">&nbsp;&nbsp;&nbsp;TV&nbsp;&nbsp;&nbsp;</span>
+                <span class="categoryTitleRight">&nbsp;&nbsp;&nbsp;TV&nbsp;&nbsp;&nbsp;</span>
                 <div class="genreToggleWrapper" id="tvToggleRow">
                         <div class="categoryToggle genreToggle" id="tvToggleRowAction">Action</div>
                         <div class="categoryToggle genreToggle" id="tvToggleRowAnimation">Animation</div>
@@ -102,19 +88,21 @@
                         <div class="categoryToggle genreToggle" id="tvToggleRowWestern">Western</div>
                 </div>
             </div>
+
             <hr class="settingsHr" id="booksToggleHr">
             <div class="genreFilterRow" id="booksToggleWrapper">
                 <!-- BOOKS -->
-                <span class="categoryTitleRight">Books</span>
+                <span class="categoryTitleLeft">Books</span>
                 <div class="genreToggleWrapper" id="bookToggleRow">
                     <div class="categoryToggle genreToggle" id="bookToggleRowFiction">Fiction</div>
                     <div class="categoryToggle genreToggle" id="bookToggleRowNonfiction">Nonfiction</div>
                 </div>
             </div>
+
             <hr class="settingsHr" id="newsToggleHr">
             <div class="genreFilterRow" id="newsToggleWrapper">
                 <!-- NEWS -->
-                <span class="categoryTitleLeft">News</span>
+                <span class="categoryTitleRight">News</span>
                 <div class="genreToggleWrapper" id="newsToggleRow">
                     <div class="categoryToggle genreToggle" id="newsToggleRowArts">Arts</div>
                     <div class="categoryToggle genreToggle" id="newsToggleRowBusiness">Business</div>
@@ -132,19 +120,39 @@
                     <div class="categoryToggle genreToggle" id="newsToggleRowWorld">World</div>
                 </div>
             </div>
+
             <hr class="settingsHr" id="gamingToggleHr">
             <div class="genreFilterRow" id="gamingToggleWrapper">
                 <!-- NEWS -->
-                <span class="categoryTitleRight">Games</span>
+                <span class="categoryTitleLeft">Games</span>
                 <div class="genreToggleWrapper" id="gamingToggleRow">
                     <div class="categoryToggle genreToggle" id="gamingToggleRowIGN">IGN</div>
                     <div class="categoryToggle genreToggle" id="gamingToggleRowPolygon">Polygon</div>
                 </div>
             </div>
+
             <hr class="settingsHr">
+
+            <hr class="settingsHr musicSettingsHr" id="musicToggleHr">
+            <div class="genreFilterRow musicGenreFilterRow" id="musicToggleWrapper">
+                <!-- MUSIC -->
+                <span class="categoryTitleLeft">Music</span>
+                <div class="genreToggleWrapper" id="musicToggleRow">
+                    <div class="categoryToggle genreToggle" id="musicToggleRowPop">Pop</div>
+                    <div class="categoryToggle genreToggle activated" id="musicToggleRowRock">Rock</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowAlt">Alt</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowEDM">EDM</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowKids">Kids</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowJazz">Jazz</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowGospel">Gospel</div>
+                    <div class="categoryToggle genreToggle" id="musicToggleRowSoundtrack">Soundtrack</div>
+                    <div class="categoryToggle genreToggle activated" id="musicToggleRowClassical">Classical</div>
+                </div>
+            </div>
         </div>
 
         <main id="mainContent">
+            
             <div class="small-card settings-card" id="signInCard">
                 <div class="default-view" id="settings-card-default">
                     <h1 class="welcomeHeader" id="welcomeHeader">Choose Your Profile:</h1>
@@ -167,94 +175,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="small-card music-card">
-                <img class="album-art" loading="lazy" src="https://consequenceofsound.net/wp-content/uploads/2019/06/taylor-swift-LOVER.jpg">
-                <div class="song-info">
-                    <h2>You Need To Calm Down</h2>
-                    <h3>Taylor Swift</h3>
-                    <h3><i>Lover</i></h3>
-                </div>
-                <div class="upvoteDownvote">
-                    <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
-                    <img class="voteButton" src="images/thumbs-down-silhouette.svg">
-                </div>
-            </div>
 
-
-
-
-            <div class="small-card music-card">
-                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/3/38/When_We_All_Fall_Asleep%2C_Where_Do_We_Go%3F.png">
-                <div class="song-info">
-                    <h2>Bad Guy</h2>
-                    <h3>Billie Eilish</h3>
-                    <h3><i>When We All Fall Asleep, Where Do We Go?</i></h3>
-                </div>
-                <div class="upvoteDownvote">
-                    <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
-                    <img class="voteButton" src="images/thumbs-down-silhouette.svg">
-                </div>
-            </div>
-            <div class="small-card music-card">
-                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/d/d6/Lights_Ellie_Single.PNG">
-                <div class="song-info">
-                    <h2>Lights</h2>
-                    <h3>Ellie Goulding</h3>
-                    <h3><i>Lights</i></h3>
-                </div>
-                <div class="upvoteDownvote">
-                    <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
-                    <img class="voteButton" src="images/thumbs-down-silhouette.svg">
-                </div>
-            </div>
-            <div class="small-card music-card">
-                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/e/e4/Death_of_a_Bachelor.jpg">
-                <div class="song-info">
-                    <h2>Victorius</h2>
-                    <h3>Panic at the Disco</h3>
-                    <h3><i>Death of a Bachelor</i></h3>
-                </div>
-                <div class="upvoteDownvote">
-                    <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
-                    <img class="voteButton" src="images/thumbs-down-silhouette.svg">
-                </div>
-            </div>
-            <div class="small-card music-card">
-                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/9/90/Scorpion_by_Drake.jpg">
-                <div class="song-info">
-                    <h2>In My Feelings</h2>
-                    <h3>Drake</h3>
-                    <h3><i>Scorpion</i></h3>
-                </div>
-                <div class="upvoteDownvote">
-                    <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
-                    <img class="voteButton" src="images/thumbs-down-silhouette.svg">
-                </div>
-            </div>
-            <div class="small-card music-card">
-                <img class="album-art" loading="lazy" src="https://upload.wikimedia.org/wikipedia/en/f/f1/Without_Me_%E2%80%93_Halsey.png">
-                <div class="song-info">
-                    <h2>Without Me</h2>
-                    <h3>Halsey</h3>
-                    <h3><i>Manic</i></h3>
-                </div>
-                <div class="upvoteDownvote">
-                    <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
-                    <img class="voteButton" src="images/thumbs-down-silhouette.svg">
-                </div>
-            </div>
-            <div class="small-card music-card">
-                <img class="album-art" loading="lazy" src="https://image.tmdb.org/t/p/w200/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg">
-                <div class="song-info">
-                    <h2>Toy Story 4</h2>
-                    <h3>Jan 1, 2019</h3>
-                    <h3><i>Kids</i></h3>
-                </div>
-                <div class="upvoteDownvote">
-                    <img class="voteButton" src="images/thumbs-up-hand-symbol.svg">
-                    <img class="voteButton" src="images/thumbs-down-silhouette.svg">
-                </div>
-            </div> -->
         </main>
 
     </body>
