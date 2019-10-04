@@ -266,7 +266,7 @@ const musicCardTemplate = `
             <h3><i><%= album %></i></h3>
         </div>
         <div class="upvoteDownvote">
-            <div class="voteButton voteDown">X</div>
+            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
         </div>
     </div>`;  
 // create a new template function with your html for music
@@ -285,7 +285,7 @@ const movieCardTemplate = `
             <h3><i><%= genre %> Movie</i></h3>
         </div>
         <div class="upvoteDownvote">
-            <div class="voteButton voteDown">X</div>
+            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
         </div>
     </div>`;    
 // create a new template function with your html for movies
@@ -303,7 +303,7 @@ const tvCardTemplate = `
             <h3><i><%= genre %> Show</i></h3>
         </div>
         <div class="upvoteDownvote">
-            <div class="voteButton voteDown">X</div>
+            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
         </div>
     </div>`;    
 // create a new template function with your html for movies
@@ -321,7 +321,7 @@ const bookCardTemplate = `
             <h3><i><%= author %></i></h3>
         </div>
         <div class="upvoteDownvote">
-            <div class="voteButton voteDown">X</div>
+            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
         </div>
     </div>`; 
 // create a new template function with your html for books
@@ -337,7 +337,7 @@ const newsCardTemplate = `
             </a>
         </div>
         <div class="upvoteDownvote">
-            <div class="voteButton voteDown">X</div>
+            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
         </div>
     </div>`; 
 // create a new template function with your html for books
@@ -353,7 +353,7 @@ const gamingCardTemplate = `
             </a>
         </div>
         <div class="upvoteDownvote">
-            <div class="voteButton voteDown">X</div>
+            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
         </div>
     </div>`; 
 // create a new template function with your html for books
