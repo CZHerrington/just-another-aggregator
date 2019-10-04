@@ -193,4 +193,19 @@ class User {
             this.persistPrefs()
         }
     }
+
+    toggleSubcategory(category, subsubcategory) {
+        console.log(`toggleSubcategory(${category})`);
+        let sentinel = this.prefs.data.subcategories[category][subsubcategory];
+
+        if (! sentinel) {
+            this.prefs.data.subcategories[category][subsubcategory] = true;
+            console.log('enabling subcategory')
+            // this.persistPrefs()
+        } else {
+            this.prefs.data.subcategories[category][subsubcategory] = false;
+            console.log('disabling subcategory')
+            // this.persistPrefs()
+        }
+    }
 }
