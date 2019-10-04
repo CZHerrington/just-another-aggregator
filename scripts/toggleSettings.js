@@ -266,8 +266,7 @@ const musicCardTemplate = `
             <h3><i><%= album %></i></h3>
         </div>
         <div class="upvoteDownvote">
-            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
-            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+            <div class="voteButton voteDown">X</div>
         </div>
     </div>`;  
 // create a new template function with your html for music
@@ -286,8 +285,7 @@ const movieCardTemplate = `
             <h3><i><%= genre %> Movie</i></h3>
         </div>
         <div class="upvoteDownvote">
-            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
-            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+            <div class="voteButton voteDown">X</div>
         </div>
     </div>`;    
 // create a new template function with your html for movies
@@ -305,8 +303,7 @@ const tvCardTemplate = `
             <h3><i><%= genre %> Show</i></h3>
         </div>
         <div class="upvoteDownvote">
-            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
-            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+            <div class="voteButton voteDown">X</div>
         </div>
     </div>`;    
 // create a new template function with your html for movies
@@ -324,8 +321,7 @@ const bookCardTemplate = `
             <h3><i><%= author %></i></h3>
         </div>
         <div class="upvoteDownvote">
-            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
-            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+            <div class="voteButton voteDown">X</div>
         </div>
     </div>`; 
 // create a new template function with your html for books
@@ -341,8 +337,7 @@ const newsCardTemplate = `
             </a>
         </div>
         <div class="upvoteDownvote">
-            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
-            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+            <div class="voteButton voteDown">X</div>
         </div>
     </div>`; 
 // create a new template function with your html for books
@@ -358,8 +353,7 @@ const gamingCardTemplate = `
             </a>
         </div>
         <div class="upvoteDownvote">
-            <img class="voteButton voteUp" src="images/thumbs-up-hand-symbol.svg">
-            <img class="voteButton voteDown" src="images/thumbs-down-silhouette.svg">
+            <div class="voteButton voteDown">X</div>
         </div>
     </div>`; 
 // create a new template function with your html for books

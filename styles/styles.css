@@ -347,6 +347,14 @@ main.hidden {
     display: none;
 }
 
+.musicSettingsHr {
+    visibility: hidden;
+}
+
+.musicGenreFilterRow {
+    visibility: hidden;
+}
+
 
 
 
@@ -478,6 +486,7 @@ main.hidden {
     color: #eee;
     font-size: 1.3rem;
     text-shadow: 1px 1px 3px #000;
+    user-select: none;
 }
 
 .signInButton:hover {
@@ -511,8 +520,8 @@ main.hidden {
     color: #ddd;
     text-shadow: 1px 1px 3px #000;
     margin-left: 15px;
-    padding-right: 50px;
-    max-width: 300px;
+    padding-right: 40px;
+    max-width: 310px;
     /* max-width: 25vw; */
     max-height: 100%;
     overflow: hidden;
@@ -532,11 +541,56 @@ main.hidden {
 .upvoteDownvote {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-end;
+    position: absolute;
+    right: 10px;
+    height: 100%;
+    padding-right: 0px;
+    padding-bottom: 10px;
+    user-select: none;
+}
+
+.voteButton {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50px;
+    border: 1px solid rgba(240, 240, 240, 0.5);
+    
+    font-size: 0.7rem;
+    color: rgba(240, 240, 240, 0.5);
+    transition: 100ms ease all;
+}
+
+.voteButton:hover {
+    transform: scale3d(1.4, 1.4, 1.4);
+    z-index: 2;
+    border: 1px solid #eee;
+    
+    background-color: #eee;
+    box-shadow: 2px 2px 4px 0 rgba(20, 20, 20, 0.9);
+    color: #0B1C43;
+    text-shadow: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+}
+
+/* The old vote buttons */
+/* .upvoteDownvote {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     position: absolute;
     right: 10px;
     height: 100%;
     padding-right: 5px;
+    padding-bottom: 15px;
 }
 
 .voteButton {
@@ -548,7 +602,7 @@ main.hidden {
 .voteButton:hover {
     transform: scale3d(1.2, 1.2, 1.2);
     z-index: 2;
-}
+} */
 
 
 
@@ -593,7 +647,7 @@ main.hidden {
 
     .music-card .song-info {
         margin-left: 10px;
-        max-width: 190px;
+        max-width: 200px;
     }
 
     .categoryToggle.genreToggle {
