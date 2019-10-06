@@ -101,18 +101,43 @@ musicToggleRow.addEventListener('click', function(e) {
 });
 movieToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
+
+    if (user !== null) {
+        let subcat = e.target.id.split('movieToggleRow')[1];
+        user.toggleSubcategory('movie', subcat);
+    }
 });
 tvToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
+
+    if (user !== null) {
+        let subcat = e.target.id.split('tvToggleRow')[1];
+        user.toggleSubcategory('tv', subcat);
+    }
 });
 bookToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
+
+    if (user !== null) {
+        let subcat = e.target.id.split('bookToggleRow')[1];
+        user.toggleSubcategory('book', subcat);
+    }
 });
 newsToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
+
+    if (user !== null) {
+        let subcat = e.target.id.split('newsToggleRow')[1];
+        user.toggleSubcategory('news', subcat);
+    }
 });
 gamingToggleRow.addEventListener('click', function(e) {
     e.target.classList.toggle('activated');
+
+    if (user !== null) {
+        let subcat = e.target.id.split('gamingToggleRow')[1];
+        user.toggleSubcategory('gaming', subcat);
+    }
 });
 
 // Sign In Buttons (appending the items removes my
