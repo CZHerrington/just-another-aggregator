@@ -224,10 +224,12 @@ class User {
     
             if (! sentinel) {
                 this.prefs.data.subcategories[category][subcategory] = true;
+                this.persistPrefs()
                 console.log('enabling subcategory')
                 // this.persistPrefs()
             } else {
                 this.prefs.data.subcategories[category][subcategory] = false;
+                this.persistPrefs()
                 console.log('disabling subcategory')
                 // this.persistPrefs()
             }
