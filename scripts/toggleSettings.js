@@ -585,7 +585,7 @@ function updateNewsData() {
                     'key': item.title,
                     section: sectionTitle,
                     'category': 'news',
-                    subcategory: item.section.replace(/ /g, '')
+                    'subcategory': item.section
                 });
                 // NOTE: I'm limiting us to 20 articles
                 if (urlCount <= 20) {resultsArray.push(html)}

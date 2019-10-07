@@ -74,7 +74,7 @@ class User {
         this.isLoggedIn = false;
 
         get(apiUrlCreator(indexId))
-            .then((json) => {this.binIdMap = json})
+            .then((json) => {this.binIdMap = json;console.log(json)})
             .then(() => {this.requestPrefs(name)})
     }
 
