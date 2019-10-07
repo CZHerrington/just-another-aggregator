@@ -2,7 +2,7 @@
 
 let user = null;
 const baseCategories = {"movies": true, "music": true, "books": true, "tv": true, "news": true, "gaming": true};
-const baseSubcategories = {"movie":{"Action":true,"Adventure":true,"Animation":true,"Comedy":true,"Crime":true,"Documentary":true,"Drama":true,"Family":true,"Fantasy":true,"History":true,"Horror":true,"Music":true,"Mystery":true,"Romance":true,"Sci-Fi":true,"TVMovie":true,"Thriller":true,"War":true,"Western":true},"book":{"fiction":true,"nonfiction":true},"tv":{"Action":true,"Animation":true,"Comedy":true,"Crime":true,"Documentary":true,"Drama":true,"Family":true,"Kids":true,"Mystery":true,"News":true,"Reality":true,"Sci-Fi":true,"Soap":true,"Talk":true,"War":true,"Western":true},"news":{"Arts":true,"Business":true,"Climate":true,"Health":true,"SmarterLiving":true,"Movies":true,"NewYork":true,"Opinion":true,"Style":true,"Technology":true,"TheUpshot":true,"Travel":true,"US":true,"World":true},"gaming":{"IGN":true,"Polygon":true}};
+const baseSubcategories = {"movie":{"Action":true,"Adventure":true,"Animation":true,"Comedy":true,"Crime":true,"Documentary":true,"Drama":true,"Family":true,"Fantasy":true,"History":true,"Horror":true,"Music":true,"Mystery":true,"Romance":true,"Sci-Fi":true,"TVMovie":true,"Thriller":true,"War":true,"Western":true},"book":{"Fiction":true,"Nonfiction":true},"tv":{"Action":true,"Animation":true,"Comedy":true,"Crime":true,"Documentary":true,"Drama":true,"Family":true,"Kids":true,"Mystery":true,"News":true,"Reality":true,"Sci-Fi":true,"Soap":true,"Talk":true,"War":true,"Western":true},"news":{"Arts":true,"Business":true,"Climate":true,"Health":true,"SmarterLiving":true,"Movies":true,"NewYork":true,"Opinion":true,"Style":true,"Technology":true,"TheUpshot":true,"Travel":true,"US":true,"World":true},"gaming":{"IGN":true,"Polygon":true}};
 
 // * * * * * * * * * * * * * * * *
 // * * * DOM EVENT LISTENERS * * *
@@ -514,7 +514,7 @@ function updateFictionBookData() {
                     art: item.book_image,
                     'key': item.title,
                     'category': 'books',
-                    subcategory: 'fiction'
+                    subcategory: 'Fiction'
                 });
                 resultsArray.push(html);
             })
@@ -545,7 +545,7 @@ function updateNonfictionBookData() {
                     art: item.book_image,
                     'key': item.title,
                     'category': 'books',
-                    subcategory: 'nonfiction'
+                    subcategory: 'Nonfiction'
                 });
 
                 resultsArray.push(html);
