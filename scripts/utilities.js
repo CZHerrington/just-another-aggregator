@@ -10,19 +10,23 @@ function get(url) {
  * @param {object[]} filteredArray array of objects to filter by key
  * @param {string[]} valueArray array of strings, is list of values to filter out
  */
-const filterContentByKeyValue = (key, filteredArray, valueArray) => filteredArray.filter((item) => {
-    let value = item[key];
-    return (valueArray.indexOf(value) === -1);
-});
+const filterContentByKeyValue = (key, filteredArray, valueArray) => filteredArray.filter((item) => valueArray.indexOf(item[key]) === -1);
 
 function baseDeferredFilter(baseCategories) {
-    console.log(baseCategories)
+    console.log(baseSubcategories)
     mainContent.childNodes.forEach((child) => {
         if (child.nodeName === "DIV") {
             if (child.dataset.category !== undefined) {
                 let category = child.dataset.category;
-
-                if (!baseCategories[category]) {
+                let subcategory = child.dataset.subcategory;
+                let subcategories = baseSubcategories[category];
+                if (subcategories === undefined) {
+                    subcategories = baseSubcategories[categoryLookup[category]]
+                }
+                // console.log(category);
+                // console.log(subcategory);
+                if (!baseCategories[category] ||
+                    (category !== 'music' && subcategories[subcategory] === false)) {
                     child.classList.add('hidden')
                     setTimeout(function() {child.classList.add('removed')}, 300)
                 } else {
@@ -123,7 +127,6 @@ class User {
     _setUICategories() {
         document.querySelector('#categoryToggleRow').childNodes.forEach((el) => {
             if (el.nodeName === "DIV" && !!el.id) {
-                console.log(el.id)
                 let category = el.id.split('Toggle')[0];
                 if (this.prefs.data.defaultCategories.indexOf(category) !== -1) {
                     el.classList.add('activated')
@@ -135,7 +138,6 @@ class User {
             }
         })
         document.querySelectorAll('.genreToggleWrapper').forEach((el) => {
-            console.log('========category - ' + el.id + '========')
             let category = el.id.split('Toggle')[0];
             el.childNodes.forEach((button) => {
                 if (button.nodeName === "DIV") {

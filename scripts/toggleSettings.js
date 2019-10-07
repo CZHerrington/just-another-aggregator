@@ -1,10 +1,12 @@
 "use strict";
 
+let user = null;
+const baseCategories = {"movies": true, "music": true, "books": true, "tv": true, "news": true, "gaming": true};
+const baseSubcategories = {"movie":{"Action":true,"Adventure":true,"Animation":true,"Comedy":true,"Crime":true,"Documentary":true,"Drama":true,"Family":true,"Fantasy":true,"History":true,"Horror":true,"Music":true,"Mystery":true,"Romance":true,"Sci-Fi":true,"TVMovie":true,"Thriller":true,"War":true,"Western":true},"book":{"fiction":true,"nonfiction":true},"tv":{"Action":true,"Animation":true,"Comedy":true,"Crime":true,"Documentary":true,"Drama":true,"Family":true,"Kids":true,"Mystery":true,"News":true,"Reality":true,"Sci-Fi":true,"Soap":true,"Talk":true,"War":true,"Western":true},"news":{"Arts":true,"Business":true,"Climate":true,"Health":true,"SmarterLiving":true,"Movies":true,"NewYork":true,"Opinion":true,"Style":true,"Technology":true,"TheUpshot":true,"Travel":true,"US":true,"World":true},"gaming":{"IGN":true,"Polygon":true}};
+
 // * * * * * * * * * * * * * * * *
 // * * * DOM EVENT LISTENERS * * *
 // * * * * * * * * * * * * * * * *
-let user = null;
-const baseCategories = {"movies": true, "music": true, "books": true, "tv": true, "news": true};
 const expandCollapse = document.querySelector("#expandCollapse");
 const settingsOverlay = document.querySelector("#settingsOverlay");
 const mainContent = document.querySelector("#mainContent");
@@ -105,6 +107,9 @@ movieToggleRow.addEventListener('click', function(e) {
     if (user !== null) {
         let subcat = e.target.id.split('movieToggleRow')[1];
         user.toggleSubcategory('movie', subcat);
+    } else {
+        let subcat = e.target.id.split('movieToggleRow')[1];
+        baseSubcategories.movie[subcat] = ! baseSubcategories.movie[subcat];
     }
 });
 tvToggleRow.addEventListener('click', function(e) {
@@ -113,6 +118,9 @@ tvToggleRow.addEventListener('click', function(e) {
     if (user !== null) {
         let subcat = e.target.id.split('tvToggleRow')[1];
         user.toggleSubcategory('tv', subcat);
+    } else {
+        let subcat = e.target.id.split('tvToggleRow')[1];
+        baseSubcategories.tv[subcat] = ! baseSubcategories.tv[subcat];
     }
 });
 bookToggleRow.addEventListener('click', function(e) {
@@ -121,6 +129,10 @@ bookToggleRow.addEventListener('click', function(e) {
     if (user !== null) {
         let subcat = e.target.id.split('bookToggleRow')[1];
         user.toggleSubcategory('book', subcat);
+    } else {
+        let subcat = e.target.id.split('bookToggleRow')[1];
+        baseSubcategories.book[subcat] = ! baseSubcategories.book[subcat];
+        console.log('book subcat listener', subcat, baseSubcategories.book[subcat])
     }
 });
 newsToggleRow.addEventListener('click', function(e) {
@@ -129,6 +141,9 @@ newsToggleRow.addEventListener('click', function(e) {
     if (user !== null) {
         let subcat = e.target.id.split('newsToggleRow')[1];
         user.toggleSubcategory('news', subcat);
+    } else {
+        let subcat = e.target.id.split('newsToggleRow')[1];
+        baseSubcategories.news[subcat] = ! baseSubcategories.news[subcat];
     }
 });
 gamingToggleRow.addEventListener('click', function(e) {
@@ -137,6 +152,9 @@ gamingToggleRow.addEventListener('click', function(e) {
     if (user !== null) {
         let subcat = e.target.id.split('gamingToggleRow')[1];
         user.toggleSubcategory('gaming', subcat);
+    } else {
+        let subcat = e.target.id.split('gamingToggleRow')[1];
+        baseSubcategories.gaming[subcat] = ! baseSubcategories.gaming[subcat];
     }
 });
 
