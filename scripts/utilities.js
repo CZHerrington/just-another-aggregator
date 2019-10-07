@@ -13,7 +13,7 @@ function get(url) {
 const filterContentByKeyValue = (key, filteredArray, valueArray) => filteredArray.filter((item) => valueArray.indexOf(item[key]) === -1);
 
 function baseDeferredFilter(baseCategories) {
-    console.log(baseSubcategories)
+    // console.log(baseSubcategories)
     mainContent.childNodes.forEach((child) => {
         if (child.nodeName === "DIV") {
             if (child.dataset.category !== undefined) {
@@ -74,7 +74,7 @@ class User {
         this.isLoggedIn = false;
 
         get(apiUrlCreator(indexId))
-            .then((json) => {this.binIdMap = json;console.log(json)})
+            .then((json) => {this.binIdMap = json})
             .then(() => {this.requestPrefs(name)})
     }
 
@@ -92,7 +92,7 @@ class User {
                     if ((dislikes.indexOf(key) !== -1) ||
                         (defaultCategories.indexOf(category) === -1) ||
                         (category !== 'music' && subcategories && subcategories[subcategory] === false)) {
-                        console.log('hiding ' + key + ' in category ' + category + '!')
+                        // console.log('hiding ' + key + ' in category ' + category + '!')
                         child.classList.add('hidden')
                         setTimeout(function() {child.classList.add('removed')}, 300)
                     } else {
@@ -120,7 +120,7 @@ class User {
                 .then(() => {this.deferredFilter()})
                 .then(() => {this._setUICategories()})
             this.isLoggedIn = true;
-            console.log(this.name + ' logged in / preferences retrieved')
+            // console.log(this.name + ' logged in / preferences retrieved')
         }
     }
 
@@ -195,7 +195,7 @@ class User {
 
     setDislike(category, value) {
         // check if category exists
-        console.log(category + ' ' + value, this.prefs.data.preferences[category]['dislikes'])
+        // console.log(category + ' ' + value, this.prefs.data.preferences[category]['dislikes'])
         if (this.prefs.data.preferences[category]['dislikes'].indexOf(value) === -1) {
             this.prefs.data.preferences[category]['dislikes'].push(value);
             this.persistPrefs()
@@ -204,35 +204,35 @@ class User {
     }
 
     toggleDefaultCategory(category) {
-        console.log(`toggleDefaultCategory(${category})`);
+        // console.log(`toggleDefaultCategory(${category})`);
         let index = this.prefs.data.defaultCategories.indexOf(category);
         if (index === -1) {
             this.prefs.data.defaultCategories.push(category);
-            console.log('enabling category')
+            // console.log('enabling category')
             this.persistPrefs()
         } else {
             this.prefs.data.defaultCategories.splice(index, 1);
-            console.log('disabling category')
+            // console.log('disabling category')
             this.persistPrefs()
         }
     }
 
     toggleSubcategory(category, subcategory) {
-        console.log(`toggleSubcategory(${category}, ${subcategory})`);
+        // console.log(`toggleSubcategory(${category}, ${subcategory})`);
         if (category === 'music') {
-            console.log('music, ignoring')
+            // console.log('music, ignoring')
         } else {
             let sentinel = this.prefs.data.subcategories[category][subcategory];
     
             if (! sentinel) {
                 this.prefs.data.subcategories[category][subcategory] = true;
                 this.persistPrefs()
-                console.log('enabling subcategory')
+                // console.log('enabling subcategory')
                 // this.persistPrefs()
             } else {
                 this.prefs.data.subcategories[category][subcategory] = false;
                 this.persistPrefs()
-                console.log('disabling subcategory')
+                // console.log('disabling subcategory')
                 // this.persistPrefs()
             }
         }

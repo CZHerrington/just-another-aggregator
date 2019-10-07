@@ -11,7 +11,7 @@ const expandCollapse = document.querySelector("#expandCollapse");
 const settingsOverlay = document.querySelector("#settingsOverlay");
 const mainContent = document.querySelector("#mainContent");
 const header = document.querySelector("#header");
-const usernameSelect = document.querySelector("#usernameSelect");
+const usernameSelectInitial = document.querySelector("#usernameSelect");
 
 const categoryToggleRow = document.querySelector('#categoryToggleRow');
 
@@ -175,12 +175,13 @@ function addSignInEventListener() {
 
     signInCard.addEventListener('click', function(e) {
 
-        // const usernameSelect = document.querySelector("#usernameSelect");
+        const usernameSelect = document.querySelector("#usernameSelect");
 
         if (e.target.id === 'signInButton') {
             // console.log(e);
             resetCategoryButtons();
             // If new user, flip to the new user overlay
+            // console.log(usernameSelect.value);
             if (usernameSelect.value === "New User") {
 
                 document.querySelector("#settings-card-default").classList.toggle("hidden");
@@ -267,7 +268,7 @@ function resetCategoryButtons() {
     get(apiUrlCreator(indexId))
     .then((json) => {
         for (let key in json) {
-            usernameSelect.innerHTML += `<option value="${key}">${key}</option>`
+            usernameSelectInitial.innerHTML += `<option value="${key}">${key}</option>`
         }
     })
 })()
