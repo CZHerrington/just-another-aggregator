@@ -13,6 +13,15 @@ const mainContent = document.querySelector("#mainContent");
 const header = document.querySelector("#header");
 
 const categoryToggleRow = document.querySelector('#categoryToggleRow');
+
+const musicToggle = document.querySelector("#musicToggle");
+const moviesToggle = document.querySelector("#moviesToggle");
+const tvToggle = document.querySelector("#tvToggle");
+const booksToggle = document.querySelector("#booksToggle");
+const newsToggle = document.querySelector("#newsToggle");
+const gamingToggle = document.querySelector("#gamingToggle");
+const categoryToggles = [musicToggle, moviesToggle, tvToggle, booksToggle, newsToggle, gamingToggle];
+
 const musicToggleRow = document.querySelector('#musicToggleRow');
 const movieToggleRow = document.querySelector('#movieToggleRow');
 const tvToggleRow = document.querySelector('#tvToggleRow');
@@ -168,7 +177,8 @@ function addSignInEventListener() {
         const usernameSelect = document.querySelector("#usernameSelect");
 
         if (e.target.id === 'signInButton') {
-            console.log(e);
+            // console.log(e);
+            resetCategoryButtons();
             // If new user, flip to the new user overlay
             if (usernameSelect.value === "New User") {
 
@@ -187,6 +197,8 @@ function addSignInEventListener() {
         if (e.target.id === 'newUserSignInButton') {
 
             // UPDATE, create and repopulate based on the new user name
+
+            resetCategoryButtons();
 
             // Clears the input field
             let username = document.querySelector("#userNameInputField").value
@@ -242,7 +254,12 @@ document.addEventListener('wheel', (e) => {
     }
 }, { capture: false, passive: true });
 
-
+function resetCategoryButtons() {
+    // Reset the toggles before sign in
+    categoryToggles.forEach(function(item) {
+        item.classList.add("activated");
+    })
+}
 
 
 
