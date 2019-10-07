@@ -10,19 +10,23 @@ function get(url) {
  * @param {object[]} filteredArray array of objects to filter by key
  * @param {string[]} valueArray array of strings, is list of values to filter out
  */
-const filterContentByKeyValue = (key, filteredArray, valueArray) => filteredArray.filter((item) => {
-    let value = item[key];
-    return (valueArray.indexOf(value) === -1);
-});
+const filterContentByKeyValue = (key, filteredArray, valueArray) => filteredArray.filter((item) => valueArray.indexOf(item[key]) === -1);
 
 function baseDeferredFilter(baseCategories) {
-    console.log(baseCategories)
+    console.log(baseSubcategories)
     mainContent.childNodes.forEach((child) => {
         if (child.nodeName === "DIV") {
             if (child.dataset.category !== undefined) {
                 let category = child.dataset.category;
-
-                if (!baseCategories[category]) {
+                let subcategory = child.dataset.subcategory;
+                let subcategories = baseSubcategories[category];
+                if (subcategories === undefined) {
+                    subcategories = baseSubcategories[categoryLookup[category]]
+                }
+                // console.log(category);
+                // console.log(subcategory);
+                if (!baseCategories[category] ||
+                    (category !== 'music' && subcategories[subcategory] === false)) {
                     child.classList.add('hidden')
                     setTimeout(function() {child.classList.add('removed')}, 300)
                 } else {
@@ -45,8 +49,16 @@ function sendRequest(url, method, body = undefined) {
     if (body !== undefined) { options.body = JSON.stringify(body) }
     return fetch(url, options).then((res) => res.json());
 }
+// neccessary to map html ids and preference data
+const categoryLookup = {
+    books: 'book',
+    tv: 'tv',
+    movies: 'movie',
+    music: 'music',
+    gaming: 'gaming'
+}
 
-const emptyPrefs = {"name":"","hash":"","data":{"preferences":{"music":{"likes":[],"dislikes":[]},"gaming":{"likes":[],"dislikes":[]},"movies":{"likes":[],"dislikes":[]},"news":{"likes":[],"dislikes":[]},"tv":{"likes":[],"dislikes":[]},"books":{"likes":[],"dislikes":[]}},"defaultCategories":["movies", "music", "books", "tv", "news", "gaming"]}};
+const emptyPrefs = {"name":"","hash":"","data":{"preferences":{"music":{"likes":[],"dislikes":[]},"gaming":{"likes":[],"dislikes":[]},"movies":{"likes":[],"dislikes":[]},"news":{"likes":[],"dislikes":[]},"tv":{"likes":[],"dislikes":[]},"books":{"likes":[],"dislikes":[]}},"defaultCategories":["movies","music","books","tv","news","gaming"],"subcategories":{"movie":{"Action":true,"Adventure":true,"Animation":true,"Comedy":true,"Crime":true,"Documentary":true,"Drama":true,"Family":true,"Fantasy":true,"History":true,"Horror":true,"Music":true,"Mystery":true,"Romance":true,"Sci-Fi":true,"TVMovie":true,"Thriller":true,"War":true,"Western":true},"book":{"Fiction":true,"Nonfiction":true},"tv":{"Action":true,"Animation":true,"Comedy":true,"Crime":true,"Documentary":true,"Drama":true,"Family":true,"Kids":true,"Mystery":true,"News":true,"Reality":true,"Sci-Fi":true,"Soap":true,"Talk":true,"War":true,"Western":true},"news":{"Arts":true,"Business":true,"Climate":true,"Health":true,"SmarterLiving":true,"Movies":true,"NewYork":true,"Opinion":true,"Style":true,"Technology":true,"TheUpshot":true,"Travel":true,"US":true,"World":true},"gaming":{"IGN":true,"Polygon":true}}}}
 const apiUrl = `https://my-little-cors-proxy.herokuapp.com/https://api.jsonbin.io/b/`;
 const indexId = '5d936e62ff3d100ac6c48eeb';
 
@@ -72,10 +84,14 @@ class User {
                 if (child.dataset.category !== undefined) {
                     let key = child.dataset.key
                     let category = child.dataset.category
+                    let subcategory = child.dataset.subcategory
                     let dislikes = this.getPreferences(category)['dislikes'];
                     let defaultCategories = this.getDefaultCategories();
+                    let subcategories = this.getSubcategories()[categoryLookup[category]];
 
-                    if ((dislikes.indexOf(key) !== -1) || (defaultCategories.indexOf(category) === -1)) {
+                    if ((dislikes.indexOf(key) !== -1) ||
+                        (defaultCategories.indexOf(category) === -1) ||
+                        (category !== 'music' && subcategories && subcategories[subcategory] === false)) {
                         console.log('hiding ' + key + ' in category ' + category + '!')
                         child.classList.add('hidden')
                         setTimeout(function() {child.classList.add('removed')}, 300)
@@ -111,7 +127,6 @@ class User {
     _setUICategories() {
         document.querySelector('#categoryToggleRow').childNodes.forEach((el) => {
             if (el.nodeName === "DIV" && !!el.id) {
-                console.log(el.id)
                 let category = el.id.split('Toggle')[0];
                 if (this.prefs.data.defaultCategories.indexOf(category) !== -1) {
                     el.classList.add('activated')
@@ -122,6 +137,20 @@ class User {
                 checkSettingsRowVisibility(el);
             }
         })
+        document.querySelectorAll('.genreToggleWrapper').forEach((el) => {
+            let category = el.id.split('Toggle')[0];
+            el.childNodes.forEach((button) => {
+                if (button.nodeName === "DIV") {
+                    let subcategory = button.id.split(el.id)[1];
+                    if (this.prefs.data.subcategories[category] && this.prefs.data.subcategories[category][subcategory]) {
+                            button.classList.add('activated')
+                        } else {
+                            button.classList.remove('activated')
+                        }
+                }
+            })
+        })
+        
     }
 
     _addName(name) {
@@ -152,6 +181,10 @@ class User {
         return this.prefs.data.defaultCategories;
     }
 
+    getSubcategories() {
+        return this.prefs.data.subcategories;
+    }
+
     setLike(category, value) {
         if (this.prefs.data.preferences[category]['likes'].indexOf(value) === -1) {
             this.prefs.data.preferences[category]['likes'].push(value);
@@ -161,7 +194,7 @@ class User {
     }
 
     setDislike(category, value) {
-        // chec if category exists
+        // check if category exists
         console.log(category + ' ' + value, this.prefs.data.preferences[category]['dislikes'])
         if (this.prefs.data.preferences[category]['dislikes'].indexOf(value) === -1) {
             this.prefs.data.preferences[category]['dislikes'].push(value);
@@ -181,6 +214,27 @@ class User {
             this.prefs.data.defaultCategories.splice(index, 1);
             console.log('disabling category')
             this.persistPrefs()
+        }
+    }
+
+    toggleSubcategory(category, subcategory) {
+        console.log(`toggleSubcategory(${category}, ${subcategory})`);
+        if (category === 'music') {
+            console.log('music, ignoring')
+        } else {
+            let sentinel = this.prefs.data.subcategories[category][subcategory];
+    
+            if (! sentinel) {
+                this.prefs.data.subcategories[category][subcategory] = true;
+                this.persistPrefs()
+                console.log('enabling subcategory')
+                // this.persistPrefs()
+            } else {
+                this.prefs.data.subcategories[category][subcategory] = false;
+                this.persistPrefs()
+                console.log('disabling subcategory')
+                // this.persistPrefs()
+            }
         }
     }
 }
